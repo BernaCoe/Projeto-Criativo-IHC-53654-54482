@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AlterarDadosConta from "../paginasJazzia/AlterarDadosConta";
 import GerarSequencia from "../paginasJazzia/GerarSequencia";
-import ListaSequencia from "../paginasJazzia/ListaSequencia";
+import ListaSequencia from "../paginasJazzia/ListaSequencias";
 import Login from "../paginasJazzia/Login";
 import MudarConta from "../paginasJazzia/MudarConta";
 import PaginaEntrada from "../paginasJazzia/PaginaEntrada";
@@ -12,7 +12,7 @@ import SeccaoConta from "../paginasJazzia/SeccaoConta";
 import SeccaoEstudio from "../paginasJazzia/SeccaoEstudio";
 import SequenciaGerada from "../paginasJazzia/SequenciaGerada";
 import SequenciaGuardada from "../paginasJazzia/SequenciaGuardada";
-import VerDados from "../paginasJazzia/VerDados";
+import VerDados from "../paginasJazzia/VerDadosConta";
 
 
 const Router = () => {

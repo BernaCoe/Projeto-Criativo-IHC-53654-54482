@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "./componentesGlobais";
-import "./componentesGlobais.css";
-import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "./GerarSequencia";
+import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReact/componentesGlobais";
+import "../componentesReact/componentesGlobais.css";
+import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "../componentesReact/GerarSequencia";
 
 
 

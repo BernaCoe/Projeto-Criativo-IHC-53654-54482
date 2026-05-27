@@ -3,7 +3,7 @@ import "./componentesGlobais.css";
 // Uso:
 // import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "./GerarSequencia";
 
-import {BotaoOpcoesGerarSequencia} from "./componentesGlobais";
+import {BotaoOpcoesGerarSequencia} from "./componentesGlobais.jsx";
 import CirculoDeQuintas from "./CirculoQuintas.jsx";
 import "./componentesGlobais.css";
 

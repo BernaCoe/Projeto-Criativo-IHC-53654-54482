@@ -4,7 +4,7 @@ import React from "react";
 // import {FundoEstudio, FundoConta, BarraSuperiorNormal, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoDashboard, BotaoOpcoesGerarSequencia, BotaoNormal, BotaoNaoPopUp, BotaoSimPopUp} from "./componentesGlobais";
 
 import "./componentesGlobais.css";
-import SetaRetrocesso from "./Componentes-Figma/SetaRetrocesso.png";
+import SetaRetrocesso from "../Componentes-Figma/SetaRetrocesso.png";
 
 
 
