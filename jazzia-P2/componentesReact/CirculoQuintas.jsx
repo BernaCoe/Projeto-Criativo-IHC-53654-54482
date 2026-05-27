@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./GerarSequencia.css";
+
 // Este código foi gerado pelo Copilot, por ordem de 53654
 
 const MAJOR = ["C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#", "F"];
