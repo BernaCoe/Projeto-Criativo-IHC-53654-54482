@@ -1,0 +1,78 @@
+.botao-normal {
+  display: flex;
+  width: 115px;
+  height: 46px;
+  padding: 13px 21px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 25px;
+  background: #F9D65C;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #6D3E0D;
+  transition: 0.2s ease;
+}
+
+.botao-normal:hover {
+  background: #FBEAAE;
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+.botao-nao-pop-up {
+  display: flex;
+  width: 55px;
+  height: 33px;
+  padding: 13px 21px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 25px;
+  background: #FF4F9A;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.botao-nao-pop-up:hover {
+  background: #ff6fb0;
+  transform: scale(1.05);
+}
+
+
+
+.botao-sim-pop-up {
+  display: flex;
+  width: 55px;
+  height: 33px;
+  padding: 13px 21px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 25px;
+  background: #A6FF4D;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+
+.botao-sim-pop-up:hover {
+  background: #50ff4d;
+  transform: scale(1.05);
+}

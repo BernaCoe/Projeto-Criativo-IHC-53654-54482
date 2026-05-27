@@ -1,0 +1,60 @@
+.tonalidade-container{
+    width: 330px;
+    height: 282px;
+    border-radius: 25px;
+    background: #F9D65C;
+}
+
+.estrutura-container{
+  width: 330px;
+  height: 168px;
+  border-radius: 25px;
+  background: #F9D65C;
+}
+
+
+.modulacao-container{
+  width: 330px;
+  height: 233px;
+  border-radius: 25px;
+  background: #F9D65C;
+}
+
+
+
+/*  CIRCULO */
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FBEAAE;
+}
+
+.circle-svg {
+  cursor: pointer;
+}
+
+/* estilo base das divisões (textos ou círculos) */
+.circle-item {
+  fill: #FBEAAE;
+  stroke: #6D3E0D;
+  stroke-width: 1px;
+  transition: 0.2s ease;
+}
+
+/* texto dentro das divisões */
+.circle-label {
+  fill: #6D3E0D;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* hover */
+.circle-item:hover {
+  fill: #ffe9a0;
+  stroke: #8a4f12;
+  transform: scale(1.15);
+}
+
+
