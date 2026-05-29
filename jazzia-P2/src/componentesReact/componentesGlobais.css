@@ -15,6 +15,18 @@
 }
 
 
+/* Para App.css ou index.css */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("../Componentes-Figma/fundo-estudio.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* O fundo não se move com o scroll */
+  position: relative; /* Define o contexto para o resto da app */
+  z-index: 0;
+}
+
 
 
 /* Texto */
@@ -27,6 +39,7 @@ font-size: 32px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
+text-align: left;
 }
 
 .texto-subtitulos{
@@ -36,6 +49,7 @@ line-height: normal;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    text-align: left;
 }
 
 
@@ -47,6 +61,7 @@ font-size: 16px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
+text-align: left;
 }
 
 
@@ -135,27 +150,36 @@ line-height: normal;
 
 /* Botões */
 
-.botao-normal {
+
+.container-botao-centro {
   display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.botao-normal {
   width: 115px;
   height: 46px;
-  padding: 13px 21px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  margin-bottom: 10px;
   border-radius: 25px;
-  background: #F9D65C;
+  background-color: #F9D65C;
   border: none;
   cursor: pointer;
   font-weight: bold;
-  color: #6D3E0D;
-  transition: 0.2s ease;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease; /* Transição suave */
 }
 
+
 .botao-normal:hover {
-  background: #FBEAAE;
+  background-color: #e5c14d; /* Cor um pouco mais escura ao passar o rato */
+  transform: scale(1.05);    /* Efeito de crescimento leve */
 }
+
 
 
 .botao-dashboard{
@@ -170,84 +194,41 @@ line-height: normal;
     border-radius: 12px;
     background: #FBEAAE;
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.30), 0 2px 4px 0 rgba(0, 0, 0, 0.30);
-}
+    display: flex;
+    text-align: center;
+  }
+
 
 .botao-dashboard:hover{
     background: #BF9400;
 }
 
 
-
-.botao-opcoes-gerar-sequencia{
-  display: flex;
+.botao-opcoes-gerar-sequencia {
   width: 140px;
-  height: 46px;
-  padding: 13px 21px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  height: 26px;
   border-radius: 25px;
   background: #FBEAAE;
 }
 
-.botao-opcoes-gerar-sequencia:hover{
-  border-radius: 25px;
+
+/* Estado : clicado */
+.botao-normal.selected, .botao-opcoes-gerar-sequencia.selected {
   background: #D4A400;
+  transform: scale(0.95);
+  filter: brightness(0.85); 
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+
+
+
+.botao-opcoes-gerar-sequencia:hover {
+  background: #f1d67b;
   box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.25) inset, 0 4px 4px 0 rgba(0, 0, 0, 0.25) inset;
 }
 
 
-
-
-.botao-nao-pop-up {
-  display: flex;
-  width: 55px;
-  height: 33px;
-  padding: 13px 21px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 25px;
-  background: #FF4F9A;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  transition: 0.2s ease;
-}
-
-.botao-nao-pop-up:hover {
-  background: #ff6fb0;
-}
-
-
-
-.botao-sim-pop-up {
-  display: flex;
-  width: 55px;
-  height: 33px;
-  padding: 13px 21px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 25px;
-  background: #A6FF4D;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  transition: 0.2s ease;
-}
-
-
-.botao-sim-pop-up:hover {
-  background: #50ff4d;
-}
 
 
 

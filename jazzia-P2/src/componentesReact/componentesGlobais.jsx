@@ -12,9 +12,10 @@ import SetaRetrocesso from "../Componentes-Figma/SetaRetrocesso.png";
 
 
 
-export function FundoEstudio({ texto = "Voltar ao Estúdio", onClick }) {
+export function FundoEstudio({ children }) {
   return (
     <div className="fundo-estudio">
+      {children}
     </div>
   );
 }
@@ -81,49 +82,30 @@ export function BotaoDashboard({ texto, onClick }) {
 }
 
 
-export function BotaoOpcoesGerarSequencia({ texto, onClick }) {
+export function BotaoOpcoesGerarSequencia({ texto, onClick, isSelected }) {
+  // Vamos imprimir no console para ver se o React acha que está selecionado
+  console.log(`Botão ${texto} - isSelected: ${isSelected}`);
+
   return (
-    <button className="botao-opcoes-gerar-sequencia" onClick={onClick}>
+    <button 
+      className={`botao-opcoes-gerar-sequencia ${isSelected ? 'selected' : ''}`}
+      onClick={onClick}
+    >
       {texto}
     </button>
   );
 }
-
 
 
 export function BotaoNormal({ texto, onClick }) {
   return (
-    <button className="botao-normal" onClick={onClick}>
-      {texto}
-    </button>
+    <div className="container-botao-centro">
+      <button className="botao-normal" onClick={onClick}>
+        {texto}
+      </button>
+    </div>
   );
 }
 
-export function BotaoNaoPopUp({ texto = "Não", onClick }) {
-  return (
-    <button className="botao-nao-pop-up" onClick={onClick}>
-      {texto}
-    </button>
-  );
-}
 
-/* Como usar?
-import BotaoNaoPopUp from "./componentesGlobais";
-<BotaoNaoPopUp texto="Não" onClick={() => console.log("Cancelado")} />
-*/
-
-
-
-export function BotaoSimPopUp({ texto = "Sim", onClick }) {
-  return (
-    <button className="botao-sim-pop-up" onClick={onClick}>
-      {texto}
-    </button>
-  );
-}
-
-/* Como usar?
-import BotaoSimPopUp from "./componentesGlobais";
-<BotaoNaoPopUp texto="Sim" onClick={() => console.log("Cancelado")} />
-*/
 

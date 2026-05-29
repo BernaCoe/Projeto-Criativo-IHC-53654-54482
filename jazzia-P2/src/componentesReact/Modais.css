@@ -1,0 +1,218 @@
+/* Container para centralizar o popup na tela */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.corpo-modal {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.divisor {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #000;
+    margin: 5px 0;
+}
+
+
+.botoes-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+
+.container-botao-modal {
+    display: flex;
+    justify-content: flex-end; /* Isto alinha tudo o que estiver dentro à direita */
+    width: 100%;
+    margin-top: auto; /* Empurra os botões para o fundo do modal */
+}
+
+
+
+
+
+/* Modal de sucesso */
+
+.caixa-modal-sucesso {
+    width: 262px;
+    height: 176px;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 4px 0 rgba(0, 0, 0, 0.50);
+    border-radius: 25px;
+    background: #CFFF9E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 8px;
+    flex: 1;
+    text-align: left;
+}
+
+
+
+
+
+/* Modal de erro */
+
+.caixa-modal-erro {
+    width: 262px;
+    height: 176px;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 4px 0 rgba(0, 0, 0, 0.50);
+    border-radius: 25px;
+    background: #FFB2D3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 8px;
+    flex: 1;
+    text-align: left;
+}
+
+
+
+
+.botao-rosa-nao-popup {
+  display: flex;
+  width: 55px;
+  height: 33px;
+  padding: 13px 21px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 25px;
+  background: #FF4F9A;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.botao-azul-cancelar-popup:hover{
+    background: #ff4f7b;
+}
+
+
+.botao-verde-sim-popup {
+  display: flex;
+  width: 55px;
+  height: 33px;
+  padding: 13px 21px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 25px;
+  background: #A6FF4D;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+
+.botao-verde-sim-popup:hover{
+    background: #65ff4d;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Modal para guardar sequencia gerada  */
+.caixa-modal-guardar {
+    width: 262px;
+    height: 176px;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 4px 0 rgba(0, 0, 0, 0.50);
+    border-radius: 25px;
+    background: #F5F5F7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 8px;
+    flex: 1;
+    text-align: left;
+}
+
+.input-nome {
+    width: 216px;
+    height: 28px;
+    border-radius: 25px;
+    background: #D4D4D4;
+    border: none;
+    padding: 0 10px;
+    outline: none;
+    color: #000;
+    font-family: Armata;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+.botao-azul-cancelar-popup {
+    display: flex;
+    width: 90px;
+    height: 33px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    background: #3EC9FF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.botao-azul-cancelar-popup:hover{
+    background: #3eb5ff;
+}
+
+
+.botao-azul-ok-popup {
+    display: flex;
+    width: 55px;
+    height: 33px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    background: #3EC9FF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    border: none;
+    cursor: pointer;
+}
+
+
+.botao-azul-ok-popup:hover{
+    background: #3eb5ff;
+}
