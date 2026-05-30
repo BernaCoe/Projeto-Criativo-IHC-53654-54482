@@ -22,7 +22,7 @@ function SeccaoConta() {
 
     const handleSave = () => {
         // Aqui: fetch (PUT/PATCH) para a API para guardar os novos dados
-        console.log("Guardando:", userData);
+        console.log("A guardar:", userData);
         setIsEditing(false);
     };
 
