@@ -6,7 +6,7 @@ import "../componentesReact/SeccaoConta.css";
 import { FundoConta, BarraSuperiorDashboard, BarraInferiorDashboard } from "../componentesReact/componentesGlobais";
 import { CaixaConta, BotaoConta } from "../componentesReact/SeccaoConta";
 
-// Nota: Mantive a estrutura que enviaste, mas preparei-a para o modo edição
+
 function SeccaoConta() {
     const navigate = useNavigate();
     
