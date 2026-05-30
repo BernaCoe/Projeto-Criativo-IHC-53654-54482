@@ -75,6 +75,22 @@
   cursor: pointer;
 }
 
+.circle-group.disabled {
+    cursor: not-allowed;
+    background-color: #c7c7c7; 
+    pointer-events: none; /* Isto faz com que o SVG ignore qualquer tentativa de clique */
+}
+
+.circle-item.invalid {
+    fill: #ccc;
+    stroke: #aaa;
+}
+
+.circle-label.invalid {
+    fill: #ccc;
+    stroke: #aaa;
+}
+
 .circle-item {
   fill: #ffd746;
   stroke: #6D3E0D;

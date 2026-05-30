@@ -25,12 +25,12 @@ const Router = () => {
         <Route path="/registo" element={<Registo />} />
         <Route path="/estudio" element={<SeccaoEstudio />} />
 
-        <Route path="/gerarSequencia" element={<GerarSequencia/>} />
+        <Route path="/" element={<GerarSequencia/>} />
         <Route path="/listaSequencia" element={<ListaSequencia />} />
         <Route path="/sequenciaGuardada" element={<SequenciaGuardada />} />
         <Route path="/sequenciaGerada" element={<SequenciaGerada />} />
 
-        <Route path="/" element={<SeccaoConta/>} />
+        <Route path="/conta" element={<SeccaoConta/>} />
         <Route path="/dadosConta" element={<VerDados />} />
         <Route path="/alterarDadosConta" element={<AlterarDadosConta />} />
         <Route path="/mudarConta" element={<MudarConta />} />

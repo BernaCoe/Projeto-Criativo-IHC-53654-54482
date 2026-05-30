@@ -178,7 +178,12 @@ text-align: left;
 
 .botao-normal:hover {
   background-color: #e5c14d; /* Cor um pouco mais escura ao passar o rato */
-  transform: scale(1.05);    /* Efeito de crescimento leve */
+}
+
+
+.botao-normal:disabled {
+  background-color: #c7c7c7; 
+  cursor: auto;
 }
 
 
@@ -268,3 +273,4 @@ text-align: left;
   gap: 10px;                /* espaço entre botões */
   margin-top: 10px;
 }
+

@@ -50,7 +50,7 @@ export function CaixaEstrutura({ onSelect, selectedStructure }) { // <--- Recebe
 
 
 export function CaixaModulacao({ onSelect, selectedModulation }) {
-  const opcoes = ["Random", "Relativo", "Dominante", "Sub-dominante", "Paralelo", "Cromático"];
+  const opcoes = ["Aleatório", "Relativo", "Dominante", "Sub-dominante", "Paralelo", "Cromático"];
 
   return (
     <div className="modulacao-container">

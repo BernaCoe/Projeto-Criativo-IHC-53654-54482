@@ -37,14 +37,19 @@ export function CaixaSequenciaGerada({ nome, children }) {
 
 // Recebe um array 'acordes' (ex: ["C", "Am", "Dm", "G", ...])
 export function TabelaSequenciaGerada({ acordes }) {
+  // Converte a string vinda da API num array
+  // Se 'acordes' for uma string como "Dm7|G7|...", o split cria o array ["Dm7", "G7", ...]
+  const listaAcordes = typeof acordes === 'string' ? acordes.split('|') : acordes;
+  
   if (!acordes || acordes.length === 0) return null;
 
-  // Garantimos 8 pares (para 16 acordes)
-  const pares = [];
+  // 8 células de tabela (para 16 acordes)
+  const celulas = [];
+
   for (let i = 0; i < 8; i++) {
-    const acorde1 = acordes[i * 2] || "";
-    const acorde2 = acordes[i * 2 + 1] || "";
-    pares.push(`${acorde1},  ${acorde2}`);
+    const acorde1 = listaAcordes[i * 2] || "";
+    const acorde2 = listaAcordes[i * 2 + 1] || "";
+    celulas.push(`${acorde1} - ${acorde2}`);
   }
 
   // Estilos inline encapsulados
@@ -61,31 +66,31 @@ export function TabelaSequenciaGerada({ acordes }) {
     height: '35px',
     paddingLeft: '10px',
     fontSize: '14px',
-    color: '#000000', // Texto preto garantido
+    color: '#000000', // Texto
     backgroundColor: '#FBEAAE' // Fundo da célula
   };
 
   return (
-    <table style={tableStyle}>
-      <tbody>
-        <tr>
-          <td style={cellStyle}>{pares[0]}</td>
-          <td style={cellStyle}>{pares[1]}</td>
-        </tr>
-        <tr>
-          <td style={cellStyle}>{pares[2]}</td>
-          <td style={cellStyle}>{pares[3]}</td>
-        </tr>
-        <tr>
-          <td style={cellStyle}>{pares[4]}</td>
-          <td style={cellStyle}>{pares[5]}</td>
-        </tr>
-        <tr>
-          <td style={cellStyle}>{pares[6]}</td>
-          <td style={cellStyle}>{pares[7]}</td>
-        </tr>
-      </tbody>
-    </table>
+      <table style={tableStyle}>
+        <tbody>
+          <tr>
+            <td style={cellStyle}>{celulas[0]}</td>
+            <td style={cellStyle}>{celulas[1]}</td>
+          </tr>
+          <tr>
+            <td style={cellStyle}>{celulas[2]}</td>
+            <td style={cellStyle}>{celulas[3]}</td>
+          </tr>
+          <tr>
+            <td style={cellStyle}>{celulas[4]}</td>
+            <td style={cellStyle}>{celulas[5]}</td>
+          </tr>
+          <tr>
+            <td style={cellStyle}>{celulas[6]}</td>
+            <td style={cellStyle}>{celulas[7]}</td>
+          </tr>
+        </tbody>
+      </table>
   );
 }
 

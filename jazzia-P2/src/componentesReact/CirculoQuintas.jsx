@@ -7,6 +7,9 @@ import "./componentesGlobais.css";
 const MAJOR = ["C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#", "F"];
 const MINOR = ["Am", "Em", "Bm", "F#m", "C#m", "G#m", "D#m", "A#m", "Fm", "Cm", "Gm", "Dm"];
 
+// Lista de tonalidades que a API não processa bem (segundo os meus testes)
+const INVALID_KEYS = ["F#", "C#", "G#", "D#", "A#", "F#m", "C#m", "G#m", "D#m", "A#m"];
+
 function CirculoQuintas({ onSelect, selectedKey }) {
   const size = 300;
   const center = size / 2;
@@ -30,27 +33,36 @@ return (
         const radius = isMajor ? rMajor : rMinor;
         const noteSize = isMajor ? 19 : 16;
         const angle = (2 * Math.PI * index) / 12 - Math.PI / 2;
+
+        const isInvalid = INVALID_KEYS.includes(note);
         const isSelected = selectedKey === note;
 
         return (
-          <g key={note} className="circle-group" onClick={() => onSelect(note)}>
-            <circle 
-              cx={center + radius * Math.cos(angle)} 
-              cy={center + radius * Math.sin(angle)} 
-              r={noteSize}
-              className={`circle-item ${isSelected ? 'selected' : ''}`}
-            />
-            <text 
-              x={center + radius * Math.cos(angle)} 
-              y={center + radius * Math.sin(angle)}
-              className={`circle-label ${isSelected ? 'selected' : ''}`}
-              textAnchor="middle" dominantBaseline="middle" fontSize="14"
-            >
-              {note}
-            </text>
-          </g>
-        );
-      })}
+          <g 
+            key={note} 
+            // Adiciona a classe 'disabled' se for inválido
+            className={`circle-group ${isInvalid ? 'disabled' : ''}`} 
+            // Impede o clique se for inválido
+            onClick={() => !isInvalid && onSelect(note)}
+          >
+          <circle 
+            cx={center + radius * Math.cos(angle)} 
+            cy={center + radius * Math.sin(angle)} 
+            r={noteSize}
+            // Adiciona a classe 'invalid' para o CSS aplicar o estilo visual
+            className={`circle-item ${isSelected ? 'selected' : ''} ${isInvalid ? 'invalid' : ''}`}
+          />
+              <text 
+                x={center + radius * Math.cos(angle)} 
+                y={center + radius * Math.sin(angle)}
+                className={`circle-label ${isSelected ? 'selected' : ''}`}
+                textAnchor="middle" dominantBaseline="middle" fontSize="14"
+              >
+                {note}
+              </text>
+            </g>
+          );
+        })}
     </svg>
   );
 }

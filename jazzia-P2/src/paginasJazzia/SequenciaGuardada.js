@@ -18,6 +18,7 @@ const BASE_URL = "https://genjazz-api.fly.dev";
 function SequenciaGuardada(){
 
     const location = useLocation();
+    const navigate = useNavigate();
         
     // Temporariamente:
     const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
@@ -31,7 +32,7 @@ function SequenciaGuardada(){
 
     const [audioUrl, setAudioUrl] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showErroAudio, setShowErroAudio] = useState(false);
     
@@ -85,20 +86,26 @@ useEffect(() => {
 
 
     const deleteProgression = async (id) => {
-        if (!email) return;
+        if (!email || !id) return;
 
         try {
-        await fetch(`${BASE_URL}/api/chords/${email}/${id}`, {
-            method: "DELETE"
-        });
+            const res = await fetch(`${BASE_URL}/api/chords/${email}/${id}`, {
+                method: "DELETE"
+            });
 
-        await loadSavedProgressions();
+            if (res.ok) {
+                setShowSucesso(true);
+                setTimeout(() => navigate("/listaSequencia"), 2000);
+            } else {
+                throw new Error("Falha ao eliminar");
+            }
         } catch (err) {
-        setError(err.message);
+            setError(err.message);
+            setShowErro(true); // Abre o modal de erro
         }
     };
 
-    console.log("O que o estado tem:", savedProgression);
+
 
 
     return(
@@ -139,9 +146,12 @@ useEffect(() => {
                     mensagem="Pretende mesmo eliminar esta sequência?"
                     onClose={() => setShowDelete(false)}
                     onConfirm={() => {
-                        setShowDelete(true)
-                        deleteProgression()
-                        }}
+                        // Fecha o modal
+                        setShowDelete(false); 
+                        // 2. Chama a função passando o ID correto
+                        // (savedProgression tem de ter o campo _id ou id)
+                        deleteProgression(savedProgression._id); 
+                    }}
                 />
             )}
 

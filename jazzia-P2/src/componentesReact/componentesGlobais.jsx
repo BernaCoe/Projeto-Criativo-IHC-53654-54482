@@ -112,15 +112,16 @@ export function BotaoOpcoesGerarSequencia({ texto, onClick, isSelected }) {
 }
 
 
-export function BotaoNormal({ texto, onClick }) {
+export function BotaoNormal({ texto, onClick, disabled }) {
   return (
     <div className="container-botao-centro">
-      <button className="botao-normal" onClick={onClick}>
+      <button className="botao-normal" onClick={onClick} disabled={disabled}>
         {texto}
       </button>
     </div>
   );
 }
+
 
 
 
