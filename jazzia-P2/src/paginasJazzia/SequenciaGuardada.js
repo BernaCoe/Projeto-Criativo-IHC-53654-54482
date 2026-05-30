@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { ClipLoader } from "react-spinners";
 import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReact/componentesGlobais";
 import "../componentesReact/componentesGlobais.css";
 import {TabelaSequenciaGerada, CaixaSequenciaGerada} from '../componentesReact/SequenciaGerada';
@@ -20,14 +20,11 @@ function SequenciaGuardada(){
     const location = useLocation();
     const navigate = useNavigate();
         
-    // Temporariamente:
-    const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
-
-    // const { user } = useUser();
+    const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
 
     const [savedProgression, setSavedProgressions] = useState(
-        location.state?.progression || { chords: [ "C", "G", "Am", "E", "F", "C", "G", "C", "F", "G", "C", "Am", "Dm", "G", "C", "C"] }
+        location.state?.progression || null
     );
 
     const [audioUrl, setAudioUrl] = useState(null);
@@ -42,8 +39,7 @@ function SequenciaGuardada(){
 
 
 useEffect(() => {
-    // Só carrega a API se não tiver recebido a sequência pelo state
-    // (Útil se o utilizador fizer refresh à página)
+    
     if (!location.state?.progression && email) {
         // Aqui pode-se ir procurar pelo ID
         // loadSavedProgressions(); 
@@ -52,7 +48,13 @@ useEffect(() => {
 
 
     const loadSavedProgressions = async () => {
-        if (!email) return;
+        if (!savedProgression && !email) {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <ClipLoader color="#D4AF37" size={50} />
+                </div>
+            );
+        }
     
         try {
           const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
