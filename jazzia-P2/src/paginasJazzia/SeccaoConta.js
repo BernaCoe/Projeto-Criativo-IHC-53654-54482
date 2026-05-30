@@ -21,7 +21,7 @@ function SeccaoConta() {
     const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
 
     const handleSave = () => {
-        // Aqui farias o fetch (PUT/PATCH) para a tua API para guardar os novos dados
+        // Aqui: fetch (PUT/PATCH) para a API para guardar os novos dados
         console.log("Guardando:", userData);
         setIsEditing(false);
     };
