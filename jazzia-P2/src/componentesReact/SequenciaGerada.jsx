@@ -11,8 +11,7 @@ import './Modais.css';
 
 export function CaixaSequenciaGerada({ nome, children }) {
     const caixaStyle = {
-        marginTop: '100px',
-        width: '250px',
+        width: '270px',
         minHeight: '200px',
         backgroundColor: '#F9D65C', // A tua cor amarela
         borderRadius: '25px',
@@ -20,8 +19,9 @@ export function CaixaSequenciaGerada({ nome, children }) {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '20px',
+        marginTop: '100px',
         gap: '25px',
-        margin: '35px',
+        margin: '25px',
         position: 'relative' // Importante para não colidir com o fluxo
     };
 
@@ -54,7 +54,7 @@ export function TabelaSequenciaGerada({ acordes }) {
 
   // Estilos inline encapsulados
   const tableStyle = {
-    width: '220px',
+    width: '240px',
     borderCollapse: 'collapse',
     backgroundColor: '#FBEAAE', // A tua cor de fundo
     margin: '0 auto',

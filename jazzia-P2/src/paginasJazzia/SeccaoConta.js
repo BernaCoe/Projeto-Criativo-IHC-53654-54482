@@ -1,64 +1,70 @@
-// Funcionalidades de navegação e estética feitas por 53654
-// Funcionalidades de utilizador feitas por 54482
-
-
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../componentesReact/componentesGlobais.css";
-import "../componentesReact/Contas.css";
+import "../componentesReact/SeccaoConta.css";
 
-import {FundoConta, BarraSuperiorDashboard, BarraInferiorDashboard} from "../componentesReact/componentesGlobais";
-import {CaixaConta, BotaoConta} from "../componentesReact/SeccaoConta";
+import { FundoConta, BarraSuperiorDashboard, BarraInferiorDashboard } from "../componentesReact/componentesGlobais";
+import { CaixaConta, BotaoConta } from "../componentesReact/SeccaoConta";
 
-import { useUser } from "@clerk/clerk-react";
-
-
-const BASE_URL = "https://genjazz-api.fly.dev";
-
-
-function SeccaoConta(){
-        const location = useLocation();
-        const navigate = useNavigate();
-            
-        // Temporariamente:
-        const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
+// Nota: Mantive a estrutura que enviaste, mas preparei-a para o modo edição
+function SeccaoConta() {
+    const navigate = useNavigate();
     
-        // const { user } = useUser();
-        const email = user?.primaryEmailAddress?.emailAddress;
-    
+    // Estado para controlar a edição e os dados
+    const [isEditing, setIsEditing] = useState(false);
+    const [userData, setUserData] = useState({ 
+        nome: "Nome Utilizador", 
+        profissao: "Profissão" 
+    });
 
+    // Simulação do utilizador (Clerk)
+    const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
 
+    const handleSave = () => {
+        // Aqui farias o fetch (PUT/PATCH) para a tua API para guardar os novos dados
+        console.log("Guardando:", userData);
+        setIsEditing(false);
+    };
 
-
-        return(
-            <div className="pagina-conteudo">
+    return (
+        <div className="pagina-conteudo">
             <FundoConta>
-                <BarraSuperiorDashboard/>
+                <BarraSuperiorDashboard />
 
-                <CaixaConta  nome="Nome Utilizador" profissao="Profissão">
-                    
-                    <BotaoConta 
-                            texto="Ver Dados de Conta"
-                            onClick={() => navigate("/dadosConta")} 
-                    />
-                        
-                    <BotaoConta 
-                            texto="Mudar de Conta" 
-                            onClick={() => navigate("/login")} 
-                    />
-                
+                <CaixaConta>
+                    {isEditing ? (
+                        // Modo de edição
+                        <div className="modo-edicao">
+                            <p className='texto-normal'>Nome</p>
+                            <input className='input-seccao-conta'
+                                value={userData.nome} 
+                                onChange={(e) => setUserData({...userData, nome: e.target.value})} 
+                            />
+                            <p className='texto-normal'>Profissão</p>
+                            <input className='input-seccao-conta'
+                                value={userData.profissao} 
+                                onChange={(e) => setUserData({...userData, profissao: e.target.value})} 
+                            />
+                            <BotaoConta texto="Guardar Dados" onClick={handleSave} />
+                            <BotaoConta texto="Cancelar" onClick={() => setIsEditing(false)} />
+                        </div>
+                    ) : (
+                        // Modo de visualização
+                        <div className="modo-visualizacao">
+                            <h2>{userData.nome}</h2>
+                            <p>{userData.profissao}</p>
+                            <p className="email-display">{user.primaryEmailAddress.emailAddress}</p>
+                            
+                            <BotaoConta texto="Editar Dados" onClick={() => setIsEditing(true)} />
+                            <BotaoConta texto="Mudar de Conta" onClick={() => navigate("/login")} />
+                        </div>
+                    )}
                 </CaixaConta>
 
-
-    
-                
-
-    
-                <BarraInferiorDashboard/>
-                
+                <BarraInferiorDashboard />
             </FundoConta>
-                </div>
-        );
+        </div>
+    );
 }
 
-export default  SeccaoConta;
+export default SeccaoConta;

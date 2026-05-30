@@ -66,14 +66,14 @@ function SequenciaGerada(){
 
 
 const saveProgression = async (nome) => {
-    // 1. Validação para impedir nome vazio ou nulo
+    // Validação para impedir nome vazio ou nulo
     if (!nome || nome.trim() === "") {
         setError("Por favor, insira um nome válido para a sequência.");
         setShowErro(true);
         return;
     }
 
-    // 2. Validação básica de dados
+    // Validação básica de dados
     if (!progression?.chords || !email) {
         setError("Dados da progressão em falta.");
         setShowErro(true);
@@ -94,15 +94,18 @@ const saveProgression = async (nome) => {
             })
         });
 
-        // 3. Verificação de sucesso do servidor
+        // Verificação de sucesso do servidor
         if (!res.ok) {
             throw new Error("O servidor não conseguiu guardar a sequência.");
         }
+        
+        const data = await res.json(); // Transforma a resposta em objeto
+        console.log('Sequência Guardada com sucesso! O ID retornado pelo servidor é: ', data.id);
 
         setShowSucesso(true); // Abre o modal de sucesso
 
     } catch (err) {
-        // 4. Captura erros de rede (ex: sem internet) e o throw new Error acima
+        // Captura erros de rede (ex: sem internet) e o throw new Error acima
         console.error("Erro ao guardar:", err);
         setError("Não foi possível ligar ao servidor. Tente novamente mais tarde.");
         setShowErro(true); // Abre o modal de erro

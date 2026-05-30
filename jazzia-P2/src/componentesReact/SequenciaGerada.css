@@ -2,7 +2,7 @@
 
 
 .tabela-simples {
-  width: 268px;
+  width: 288px;
   border-collapse: collapse;
   background-color: #FBEAAE;
   margin: 0 auto;
@@ -20,7 +20,7 @@
 
 /* 3. Ajuste na Caixa (Para garantir que a tabela fica centrada) */
 .caixa-sequencia-gerada {
-  width: 300px;
+  width: 340px;
   height: 200px;
   border-radius: 25px;
   background: #F9D65C;

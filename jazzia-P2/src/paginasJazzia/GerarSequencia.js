@@ -7,7 +7,7 @@ import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReac
 import "../componentesReact/componentesGlobais.css";
 import "../componentesReact/GerarSequencia.css";
 import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "../componentesReact/GerarSequencia";
-import { useUser } from "@clerk/clerk-react";
+// import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from 'react-router-dom';
 
 import {ModalErroComDecisao} from "../componentesReact/Modais.jsx"
@@ -32,7 +32,6 @@ function GerarSequencia(){
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showErro, setShowErro] = useState(null);
-    const [showErroGeracao, setShowErroGeracao] = useState(null);
 
     const [keys, setKeys] = useState([]);
     const [structures, setStructures] = useState([]);
@@ -60,12 +59,16 @@ function GerarSequencia(){
             setStructures(sData.map(s => s.structure ?? s).slice(0, 10)); // TOP 10
             setModulations(mData.map(m => m.modulation ?? m));
             
-            console.log("LISTA DE CHAVES QUE A API ACEITA:", kData); // Para debug
+            console.log("LISTA DE TONALIDADES QUE A API ACEITA:", kData); // Para debug
                     
-            // para debuggin
+            // para debugging
             fetch(`${BASE_URL}/api/structures`)
             .then(res => res.json())
             .then(data => console.log("Estruturas válidas:", data));
+
+            fetch(`${BASE_URL}/api/modulations`)
+            .then(res => res.json())
+            .then(data => console.log("Modulações válidas:", data));
 
 
           } catch (err) {

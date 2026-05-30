@@ -1,0 +1,87 @@
+/* Feito por 53654 */
+
+.retanguloFundoSeccaoConta{
+    width: 327px;
+    height: 236px;
+    border-radius: 25px;
+    background: #F9D65C;
+
+}
+
+
+
+.botao-seccao-conta{
+    display: flex;
+    width: 255px;
+    height: 32px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 25px;
+    border: none;
+    background: #FBEAAE;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.botao-seccao-conta:hover {
+  background-color: #e5c14d;
+}
+
+
+
+/* Estilo para os Inputs (Modo Edição) */
+.input-conta {
+    width: 255px;
+    height: 30px;
+    padding: 5px 15px;
+    border-radius: 15px;
+    border: 1px solid #d4b035;
+    background: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+
+/* Para o texto de visualização */
+.texto-conta-visualizacao {
+    text-align: center;
+    color: #333;
+    font-weight: 500;
+}
+
+
+.input-seccao-conta {
+    width: 255px;
+    height: 40px;
+    padding: 0 15px;
+    margin: 8px 0;
+    display: flex;
+    border-radius: 25px; 
+    border: 2px solid #D3B0FE;
+    background-color: #FFF9E6; 
+    margin-top: -15px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #000000; 
+    
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Garante que o padding não aumenta a largura */
+}
+
+/* Efeito ao clicar no campo */
+.input-seccao-conta:focus {
+    outline: none;
+    border-color:  #CB7822; /* Cor mais escura no foco */
+    box-shadow: 0 0 8px rgba(203, 120, 34, 0.4);
+}
+
+
+.input-seccao-conta::placeholder {
+    color: #000000;
+    opacity: 0.7;
+}
