@@ -1,0 +1,26 @@
+
+.topbar {
+  width: 100%;
+  background: #FBEAAE;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  flex-shrink: 0;        /* never gets squished by screen content */
+}
+
+.topbar-back {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  color: #5B3A00;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+}
+
+.topbar-back:hover { opacity: 0.75; }

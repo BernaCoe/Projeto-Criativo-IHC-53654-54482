@@ -1,3 +1,6 @@
+// Estética e funcionalidades de interação feitas por 53654
+// Funcionalidades de persistência feita por 54482
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../componentesReact/componentesGlobais.css";
@@ -6,7 +9,7 @@ import "../componentesReact/SeccaoConta.css";
 import { FundoConta, BarraSuperiorDashboard, BarraInferiorDashboard } from "../componentesReact/componentesGlobais";
 import { CaixaConta, BotaoConta } from "../componentesReact/SeccaoConta";
 
-// Nota: Mantive a estrutura que enviaste, mas preparei-a para o modo edição
+
 function SeccaoConta() {
     const navigate = useNavigate();
     
@@ -21,8 +24,8 @@ function SeccaoConta() {
     const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
 
     const handleSave = () => {
-        // Aqui farias o fetch (PUT/PATCH) para a tua API para guardar os novos dados
-        console.log("Guardando:", userData);
+        // Aqui: fetch (PUT/PATCH) para a API para guardar os novos dados
+        console.log("A guardar:", userData);
         setIsEditing(false);
     };
 

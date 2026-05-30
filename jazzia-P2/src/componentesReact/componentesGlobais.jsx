@@ -4,10 +4,10 @@ import React from "react";
 import {useNavigate, useLocation } from 'react-router-dom';
 import "./componentesGlobais.css";
 import SetaRetrocesso from "../Componentes-Figma/SetaRetrocesso.png";
-
+import BotaoEstudio from '../Componentes-Figma/Botao-seccao-estudio.png';
 
 // Como usar estes componentes:
-// import {FundoEstudio, FundoConta, BarraSuperiorNormal, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoDashboard, BotaoOpcoesGerarSequencia, BotaoNormal, BotaoNaoPopUp, BotaoSimPopUp} from "./componentesGlobais";
+// import {FundoEstudio, FundoConta, BotaoGrandeEstudio, FundoLogin, FundoEntrada, BarraSuperiorNormal, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoDashboard, BotaoOpcoesGerarSequencia, BotaoNormal, BotaoNaoPopUp, BotaoSimPopUp} from "./componentesGlobais";
 
 
 
@@ -18,6 +18,26 @@ export function FundoEstudio({ children }) {
     </div>
   );
 }
+
+
+
+export function FundoLogin({ children }) {
+  return (
+    <div className="fundo-login">
+      {children}
+    </div>
+  );
+}
+
+
+export function FundoEntrada({ children }) {
+  return (
+    <div className="fundo-entrada">
+      {children}
+    </div>
+  );
+}
+
 
 
 export function FundoConta({ children }) {
@@ -123,5 +143,25 @@ export function BotaoNormal({ texto, onClick, disabled }) {
 }
 
 
+
+
+export function BotaoGrandeEstudio({ onClick, texto }) {
+  return (
+    <button className="botao-grande-estudio" onClick={onClick}>
+      {texto}
+    </button>
+  );
+}
+
+
+
+export function BotaoSequenciaGuardada({ onClick, texto, key }) {
+  return (
+    <button className="botao-sequencia-guardada" onClick={onClick}>
+      {texto}
+      {key}
+    </button>
+  );
+}
 
 

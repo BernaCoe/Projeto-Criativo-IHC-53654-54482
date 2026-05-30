@@ -1,0 +1,39 @@
+
+.app-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.app-input-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: #2A1A00;
+  letter-spacing: 0.2px;
+}
+
+.app-input {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #2A1A00;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #C89A10;
+  border-radius: 0;
+  padding: 4px 0;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.app-input::placeholder {
+  color: #7A5A20;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.app-input:focus {
+  border-bottom-color: #6B2FA0;
+}

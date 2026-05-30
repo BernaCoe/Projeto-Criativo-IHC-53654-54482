@@ -1,0 +1,12 @@
+.container-entrada {
+  opacity: 1;
+  transition: opacity 0.5s ease-out; /* Define a duração do desvanecimento */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fade-out {
+  opacity: 0; /* Torna o ecrã invisível */
+}

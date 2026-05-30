@@ -1,0 +1,30 @@
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #5B3A00;
+  padding: 6px 0;
+  align-self: flex-start;
+  transition: opacity 0.15s ease;
+  letter-spacing: 0.2px;
+}
+
+.back-btn:hover {
+  opacity: 0.75;
+}
+
+.back-btn:active {
+  opacity: 0.5;
+}
+
+.back-btn-arrow {
+  font-size: 16px;
+  line-height: 1;
+}

@@ -1,0 +1,20 @@
+
+.app-card {
+  width: 330px;
+  height: auto;          /* auto instead of fixed — lets content breathe */
+  border-radius: 25px;
+  background: #F5F5F7;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(60,10,80,0.12);
+}
+
+.app-card-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: #2A1A00;
+  margin-bottom: 2px;
+}

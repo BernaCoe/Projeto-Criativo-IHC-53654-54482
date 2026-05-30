@@ -1,0 +1,169 @@
+
+/* ── Base ── */
+.app-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 700;
+    transition: filter 0.12s ease, transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+/* ── Variants ── */
+.app-btn.dourada { 
+    /* Layout */
+    display: flex;
+    width: 122px;
+    height: 46px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* Style */
+    border-radius: 25px;
+    background: #FBEAAE;
+}
+.app-btn.verde { 
+    /* Layout */
+    display: flex;
+    width: 122px;
+    height: 46px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* Style */
+    border-radius: 25px;
+    background: #A6FF4D;
+}
+.app-btn.azul { 
+    /* Layout */
+    display: flex;
+    width: 122px;
+    height: 46px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* Style */
+    border-radius: 25px;
+    background: #3EC9FF;
+}
+.app-btn.rosa { 
+    /* Layout */
+    display: flex;
+    width: 122px;
+    height: 46px;
+    padding: 13px 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* Style */
+    border-radius: 25px;
+    background: #FF4F9A;
+}
+.app-btn.estudio {
+    /* Layout */
+    display: flex;
+    width: 103px;
+    height: 43px;
+    padding: 11px 19px 12px 19px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    aspect-ratio: 103/43;
+    /* Style */
+    border-radius: 12px;
+    background: #FBEAAE;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.30), 0 2px 4px 0 rgba(0, 0, 0, 0.30);
+}   
+
+.app-btn.guardado {
+    /* Layout */
+    width: 332px;
+    height: 88px;
+    /* Style */
+    border-radius: 25px;
+    background: radial-gradient(50% 50% at 50% 50%, #FFF4CD 0%, #F9D65C 100%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.app-btn.menu {
+    width: 332px;
+    height: 123px;
+    border-radius: 25px;
+    background: radial-gradient(50% 50% at 50% 50%, #FFF4CD 0%, #F9D65C 100%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* ── States ── */
+.app-btn.dourada:hover  { 
+  background: #D4A400;                              /* darker gold */
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;  /* inset only = pressed */
+  transform: scale(0.97);
+}
+.app-btn.dourada:active {
+  background: #D4A400;                              /* darker gold */
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;  /* inset only = pressed */
+  transform: scale(0.97);
+}
+
+.app-btn.verde:hover  { filter: brightness(1.08); }
+.app-btn.verde:active {
+  background: #357A38;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;
+  transform: scale(0.97);
+}
+
+.app-btn.azul:hover  { filter: brightness(1.08); }
+.app-btn.azul:active {
+  background: #0277BD;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;
+  transform: scale(0.97);
+}
+
+.app-btn.rosa:hover  { filter: brightness(1.08); }
+.app-btn.rosa:active {
+  background: #C2185B;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;
+  transform: scale(0.97);
+}
+
+.app-btn.estudio:hover  {
+  background: #C89A10;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;
+  transform: scale(0.97);
+}
+.app-btn.estudio:active {
+  background: #C89A10;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35) inset;
+  transform: scale(0.97);
+}
+
+.app-btn.guardado:hover { filter: brightness(1.05); }
+.app-btn.guardado:active {
+    /* Layout */
+    width: 332px;
+    height: 88px;
+    /* Style */
+    border-radius: 25px;
+    background: radial-gradient(50% 50% at 50% 50%, #FFF4CD 0%, #C89A10 100%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.app-btn.menu:hover { filter: brightness(1.05); }
+.app-btn.menu:active {
+    width: 332px;
+    height: 123px;
+    border-radius: 25px;
+    background: radial-gradient(50% 50% at 50% 50%, #FFF4CD 0%, #C89A10 100%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
