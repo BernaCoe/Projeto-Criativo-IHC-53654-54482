@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+// Feito por 53654
 
-import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReact/componentesGlobais";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import {FundoEstudio, BarraSuperiorNormal, BotaoNormal, BarraInferiorDashboard} from "../componentesReact/componentesGlobais";
 import "../componentesReact/componentesGlobais.css";
 import {TabelaSequenciaGerada, CaixaSequenciaGerada} from '../componentesReact/SequenciaGerada';
 import {ModalSucesso, ModalErroInformativo, ModalGuardar} from "../componentesReact/Modais"
@@ -13,6 +16,8 @@ const BASE_URL = "https://genjazz-api.fly.dev";
 
 
 function SequenciaGerada(){
+
+    const location = useLocation();
         
     // Temporariamente:
     const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
@@ -23,9 +28,16 @@ function SequenciaGerada(){
     const [selectedKey, setKeys] = useState(null);
     const [selectedStructure, setStructures] = useState(null);
     const [selectedModulation, setModulations] = useState(null);
-    // const [progression, setProgressions] = useState(null);
-    // Apenas para teste, coloca dados falsos para ver se a tabela aparece
-    const [progression, setProgressions] = useState({ chords: ["C", "Am", "Dm", "G", "C", "Am", "Dm", "G", "C", "Am", "Dm", "G", "C", "Am", "Dm", "G", ] });
+
+    // Tentamos ler do state, se não existir, usamos o valor de teste
+    const dadosIniciais = location.state?.progression || { 
+        chords: [ "C", "G", "Am", "E", "F", "C", "G", "C", "F", "G", "C", "Am", "Dm", "G", "C", "C"] // Exemplo de acordes, por defeito
+
+
+    };
+
+    const [progression, setProgression] = useState(dadosIniciais);
+    
     const [audioUrl, setAudioUrl] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
@@ -36,37 +48,6 @@ function SequenciaGerada(){
     const [showErro, setShowErro] = useState(false);
 
     
-
-    
-    useEffect(() => {
-    const load = async () => {
-        try {
-        setLoading(true);
-
-        const [kRes, sRes, mRes] = await Promise.all([
-            fetch(`${BASE_URL}/api/keys`),
-            fetch(`${BASE_URL}/api/structures`),
-            fetch(`${BASE_URL}/api/modulations`)
-        ]);
-
-        const kData = await kRes.json();
-        const sData = await sRes.json();
-        const mData = await mRes.json();
-
-        setKeys(kData.map(k => k.key ?? k));
-        setStructures(sData.map(s => s.structure ?? s).slice(0, 10)); // TOP 10
-        setModulations(mData.map(m => m.modulation ?? m));
-
-        } catch (err) {
-        setError(err.message);
-        } finally {
-        setLoading(false);
-        }
-    };
-
-    load();
-    }, []);
-
 
     const convertToMp3 = async () => {
         if (!progression?.chords) return;
@@ -84,43 +65,59 @@ function SequenciaGerada(){
     };
 
 
-    const saveProgression = async () => {
-        if (!progression?.chords || !email) {
-            setError("Progressão ou utilizador inválido.");
-            setShowErro(true);
-            return;
-        }
+const saveProgression = async (nome) => {
+    // 1. Validação para impedir nome vazio ou nulo
+    if (!nome || nome.trim() === "") {
+        setError("Por favor, insira um nome válido para a sequência.");
+        setShowErro(true);
+        return;
+    }
 
-        try {
-            const res = await fetch(`${BASE_URL}/api/chords`, {
+    // 2. Validação básica de dados
+    if (!progression?.chords || !email) {
+        setError("Dados da progressão em falta.");
+        setShowErro(true);
+        return;
+    }
+
+    try {
+        const res = await fetch(`${BASE_URL}/api/chords`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email,
+                name: nome,
                 chords: progression.chords,
                 key: selectedKey,
                 structure: selectedStructure || "Random",
                 modulation: selectedModulation || "Random"
             })
-            });
+        });
 
-            if (!res.ok) throw new Error("Falha ao guardar no servidor.");
-                setShowSucesso(true); // Se tudo correu bem, abre o modal de sucesso
-            } catch (err) {
-                setError(err.message);
-                setShowErro(true); // Se deu erro, abre o modal de erro
-            }
-        };
+        // 3. Verificação de sucesso do servidor
+        if (!res.ok) {
+            throw new Error("O servidor não conseguiu guardar a sequência.");
+        }
+
+        setShowSucesso(true); // Abre o modal de sucesso
+
+    } catch (err) {
+        // 4. Captura erros de rede (ex: sem internet) e o throw new Error acima
+        console.error("Erro ao guardar:", err);
+        setError("Não foi possível ligar ao servidor. Tente novamente mais tarde.");
+        setShowErro(true); // Abre o modal de erro
+    }
+};
 
 
 
     return(
-        <>
+        <div className="pagina-conteudo">
         <FundoEstudio>
             <BarraSuperiorNormal/>
 
             {progression && (
-                <CaixaSequenciaGerada>
+                <CaixaSequenciaGerada texto='Sequência Gerada'>
                     <TabelaSequenciaGerada acordes={progression.chords} />
                 </CaixaSequenciaGerada>
             )}
@@ -144,10 +141,7 @@ function SequenciaGerada(){
             <BotaoNormal 
                 texto="Guardar" 
                 onClick={() => setShowGuardar(true)}
-            />
-
-
-            
+            />            
 
             
             {showGuardar && (
@@ -160,7 +154,6 @@ function SequenciaGerada(){
                 />
             )}
 
-            
             {showSucesso && (
                 <ModalSucesso 
                     mensagem="A sequência foi guardada com sucesso." 
@@ -185,7 +178,7 @@ function SequenciaGerada(){
             )}
 
             </FundoEstudio>
-            </>
+            </div>
        
     );
 }

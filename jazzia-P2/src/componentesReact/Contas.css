@@ -1,5 +1,6 @@
+/* Feito por 53654 */
 
-#retanguloFundoSeccaoConta{
+.retanguloFundoSeccaoConta{
     width: 327px;
     height: 236px;
     border-radius: 25px;
@@ -7,15 +8,8 @@
 }
 
 
-#circuloFotoPerfil{
-    width: 80px;
-    height: 80px;
-    fill: #F5F5F7;
-    stroke-width: 1px;
-    stroke: #6D3E0D;
-}
 
-#botaoSeccaoConta{
+.botao-seccao-conta{
     display: flex;
     width: 255px;
     height: 32px;
@@ -25,6 +19,15 @@
     align-items: center;
     gap: 10px;
     border-radius: 25px;
+    border: none;
     background: #FBEAAE;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.botao-seccao-conta:hover {
+  background-color: #e5c14d;
+  transform: scale(1.05);    /* Efeito de crescimento leve */
 }
 

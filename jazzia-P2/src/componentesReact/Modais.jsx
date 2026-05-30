@@ -1,9 +1,12 @@
+// Feito por 53654
+
+
 import React, { useState }  from 'react';
 import './Modais.css';
 
 
 // Uso:
-// import {BotaoAzulNormalPopUp, BotaoNaoPopUp, BotaoSimPopUp, ModalSucesso, ModalErroInformativo, ModalErroComDecisao} from "../componentesReact/Modais.jsx"
+// import {BotaoAzulNormalPopUp, BotaoNaoPopUp, BotaoSimPopUp, ModalSucesso, ModalErroInformativo, ModalErroComDecisao, ModalAtencao} from "../componentesReact/Modais.jsx"
 
 
 
@@ -176,6 +179,33 @@ export function ModalErroComDecisao({ mensagem, onClose, onConfirm }) {
 
 
 
+export function ModalAtencao({ mensagem, onClose, onConfirm }) {
+  return (
+    <div style={overlayStyle}>
+      <div style={{ ...caixaBaseStyle, backgroundColor: '#F5F5F7' }}>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>Atenção!</p>
+        <hr style={divisorStyle} />
+        
+        <div style={corpoModalStyle}>
+          <p style={{ margin: 0 }}>{mensagem}</p>
+        </div>
+
+        {/* Container específico para dois botões */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '10px', 
+          marginTop: 'auto', 
+          width: '100%',
+          justifyContent: 'center' 
+        }}>
+          <BotaoNaoPopUp texto="Não" onClick={onClose} />
+          <BotaoSimPopUp texto="Sim" onClick={onConfirm} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 
 
@@ -183,10 +213,20 @@ export function ModalErroComDecisao({ mensagem, onClose, onConfirm }) {
 
 export function ModalGuardar({ onClose, onConfirm }) {
   const [nome, setNome] = useState("");
+  const [erro, setErro] = useState(""); // Novo estado para erro local
+
+  const handleOk = () => {
+    if (!nome || nome.trim() === "") {
+      setErro("Por favor, introduza um nome.");
+      return;
+    }
+    setErro(""); // Limpa erro
+    onConfirm(nome);
+  };
 
   return (
     <div style={overlayStyle}>
-      <div style={{ ...caixaBaseStyle, backgroundColor: '#FFFFFF' }}> {/* Supondo fundo branco para este */}
+      <div style={{ ...caixaBaseStyle, backgroundColor: '#F5F5F7' }}>
         <p style={{ margin: 0, fontWeight: 'bold' }}>Guardar Sequência</p>
         <hr style={divisorStyle} />
         
@@ -196,25 +236,31 @@ export function ModalGuardar({ onClose, onConfirm }) {
           type="text" 
           placeholder="Nome..." 
           value={nome}
-          onChange={(e) => setNome(e.target.value)}
+          onChange={(e) => {
+            setNome(e.target.value);
+            if (erro) setErro(""); // Limpa o aviso ao começar a escrever
+          }}
           style={{
             width: '80%',
             padding: '8px',
             borderRadius: '5px',
-            border: '1px solid #ccc',
-            marginBottom: '10px'
+            border: erro ? '1px solid red' : '1px solid #ccc', // Borda vermelha se houver erro
+            marginBottom: '5px'
           }}
         />
+        
+        {/* Aviso de erro pequeno abaixo do input */}
+        {erro && <p style={{ color: 'red', fontSize: '11px', marginTop: '-12px', marginBottom: '-7px'}}>{erro}</p>}
 
         <div style={{ 
           display: 'flex', 
           gap: '10px', 
-          marginTop: 'auto', 
+          marginTop: '0px', 
           width: '100%',
           justifyContent: 'center' 
         }}>
           <BotaoAzulLargoPopUp texto="Cancelar" onClick={onClose} />
-          <BotaoAzulNormalPopUp texto="OK" onClick={() => onConfirm(nome)} />
+          <BotaoAzulNormalPopUp texto="OK" onClick={handleOk} />
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+/* Gerado pelo Gemini, segundo as indicações de 53654 */
+
 import React from "react";
 import "./GerarSequencia.css";
 import "./componentesGlobais.css";

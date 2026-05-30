@@ -1,8 +1,13 @@
+/* Feito por 53654 */
+
 
 /* Fundos */
 
 .fundo-conta{
-    background: linear-gradient(192deg, #6D3E0D 0%, #6D3E0D 10.01%, #CB7822 54.33%, #A25F19 74.04%, #6D3E0D 100%);
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(192deg, #6D3E0D 0%, #6D3E0D 10.01%, #CB7822 54.33%, #A25F19 74.04%, #6D3E0D 100%);
+  background-position: center;
 }
 
 
@@ -28,24 +33,30 @@
 }
 
 
+.pagina-conteudo {
+  position: relative; /* Define a fronteira da página */
+  width: 100%;
+  height: 100%;       /* Deve ocupar a altura total do SmartphoneFrame */
+}
+
 
 /* Texto */
 
-.texto-títulos{
+.texto-titulos{
 color: #000;
 
 font-family: Armata;
-font-size: 32px;
+font-size: 24px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
-text-align: left;
+text-align: center;
 }
 
 .texto-subtitulos{
     color: #0A0F1F;
     font-family: Armata;
-    font-size: 14px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -82,14 +93,6 @@ text-align: left;
 
 
 
-
-
-
-
-
-
-
-
 /* Barras */
 
 .barra-superior {
@@ -102,8 +105,6 @@ text-align: left;
   flex-direction: row;        /* alinhamento horizontal */
   align-items: center;        /* alinha verticalmente */
   justify-content: flex-start; /* conteúdo começa sempre à esquerda */
-
-  cursor: pointer;
   border-radius: 4px;
 }
 
@@ -112,31 +113,31 @@ text-align: left;
   height: 24px;
   margin-left: 15px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 
 
 
 .barra-inferior {
+  position: absolute; /* Cola-se ao container pai (.pagina-conteudo) */
+  bottom: 0;          /* Força a barra a ficar no fundo do container */
+  left: 0;
+  width: 100%;
+  height: 58px;
+
   width: 100%;
   height: 58px;
   background-image: url("../Componentes-Figma/Barra-Inferior.png");
   background-size: cover;
   background-position: center;
 
-  display: flex;
+  display: flex; /* Faz os botões ficarem lado a lado */
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 80px; /* Espaço entre os botões da dashboard */
+  
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -185,7 +186,7 @@ text-align: left;
 .botao-dashboard{
     display: flex;
     width: 103px;
-    height: 43px;
+    height: 35px;
     padding: 11px 19px 12px 19px;
     justify-content: center;
     align-items: center;
@@ -194,12 +195,17 @@ text-align: left;
     border-radius: 12px;
     background: #FBEAAE;
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.30), 0 2px 4px 0 rgba(0, 0, 0, 0.30);
-    display: flex;
     text-align: center;
+    margin-top: 10px;
   }
 
 
 .botao-dashboard:hover{
+    background: #BF9400;
+}
+
+
+.botao-dashboard:selected{
     background: #BF9400;
 }
 
@@ -240,14 +246,7 @@ text-align: left;
 
 
 
-
-
-
-
-
-
 /* Página: Gerar Sequência */
-
 
 .estrutura-container,
 .modulacao-container {

@@ -1,3 +1,6 @@
+/* Feito por 53654 */
+
+
 .tabela-simples {
   width: 268px;
   border-collapse: collapse;
@@ -7,7 +10,7 @@
 
 .tabela-simples td {
   border: 1px solid #848484;
-  height: 35px; /* Altura calculada para caber 4 linhas no espaço de 139px */
+  height: 35px; /* Altura calculada para caber 4 linhas no espaço de 139px definido no Figma */
   width: 50%;   /* Divide a tabela ao meio (2 colunas) */
   padding-left: 10px;
   font-size: 13px; /* Tamanho ajustado para caber o par */
@@ -17,8 +20,8 @@
 
 /* 3. Ajuste na Caixa (Para garantir que a tabela fica centrada) */
 .caixa-sequencia-gerada {
-    width: 300px;
-    height: 200px;
+  width: 300px;
+  height: 200px;
   border-radius: 25px;
   background: #F9D65C;
   display: flex;

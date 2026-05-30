@@ -1,5 +1,7 @@
+// Feito por 53654
+
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 
 import AlterarDadosConta from "../paginasJazzia/AlterarDadosConta";
 import GerarSequencia from "../paginasJazzia/GerarSequencia";
@@ -18,7 +20,7 @@ import VerDados from "../paginasJazzia/VerDadosConta";
 const Router = () => {
   return (
       <Routes>
-        <Route path="/Entrada" element={<PaginaEntrada />} />
+        <Route path="/entrada" element={<PaginaEntrada />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registo" element={<Registo />} />
         <Route path="/estudio" element={<SeccaoEstudio />} />
@@ -26,9 +28,9 @@ const Router = () => {
         <Route path="/gerarSequencia" element={<GerarSequencia/>} />
         <Route path="/listaSequencia" element={<ListaSequencia />} />
         <Route path="/sequenciaGuardada" element={<SequenciaGuardada />} />
-        <Route path="/" element={<SequenciaGerada />} />
+        <Route path="/sequenciaGerada" element={<SequenciaGerada />} />
 
-        <Route path="/conta" element={<SeccaoConta/>} />
+        <Route path="/" element={<SeccaoConta/>} />
         <Route path="/dadosConta" element={<VerDados />} />
         <Route path="/alterarDadosConta" element={<AlterarDadosConta />} />
         <Route path="/mudarConta" element={<MudarConta />} />

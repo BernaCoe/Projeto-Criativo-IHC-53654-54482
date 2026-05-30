@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// Feito por 53654
+
+import React from 'react';
 import "./componentesGlobais.css";
 import './Modais.css'; 
 
@@ -6,7 +8,8 @@ import './Modais.css';
 // Uso:
 // import {TabelaSequenciaGerada, CaixaSequenciaGerada} from "./SequenciaGerada";
 
-export function CaixaSequenciaGerada({ children }) {
+
+export function CaixaSequenciaGerada({ nome, children }) {
     const caixaStyle = {
         marginTop: '100px',
         width: '250px',
@@ -18,13 +21,13 @@ export function CaixaSequenciaGerada({ children }) {
         alignItems: 'center',
         padding: '20px',
         gap: '25px',
-        margin: '0 auto',
+        margin: '35px',
         position: 'relative' // Importante para não colidir com o fluxo
     };
 
     return (
         <div style={caixaStyle}>
-            <p className="texto-normal" style={{ margin: 0 }}>Sequência Gerada</p>
+            <p className="texto-normal" style={{ margin: 0 }}>{nome}</p>
             {children}
         </div>
     );

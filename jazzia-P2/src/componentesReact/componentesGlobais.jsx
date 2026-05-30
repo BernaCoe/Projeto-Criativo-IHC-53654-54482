@@ -1,14 +1,13 @@
+// Feito por 53654
+
 import React from "react";
-
-// Como usar estes componentes:
-// import {FundoEstudio, FundoConta, BarraSuperiorNormal, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoDashboard, BotaoOpcoesGerarSequencia, BotaoNormal, BotaoNaoPopUp, BotaoSimPopUp} from "./componentesGlobais";
-
+import {useNavigate, useLocation } from 'react-router-dom';
 import "./componentesGlobais.css";
 import SetaRetrocesso from "../Componentes-Figma/SetaRetrocesso.png";
 
 
-
-
+// Como usar estes componentes:
+// import {FundoEstudio, FundoConta, BarraSuperiorNormal, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoDashboard, BotaoOpcoesGerarSequencia, BotaoNormal, BotaoNaoPopUp, BotaoSimPopUp} from "./componentesGlobais";
 
 
 
@@ -21,9 +20,10 @@ export function FundoEstudio({ children }) {
 }
 
 
-export function FundoConta() {
+export function FundoConta({ children }) {
   return (
     <div className="fundo-conta">
+      {children}
     </div>
   );
 }
@@ -31,10 +31,10 @@ export function FundoConta() {
 
 
 
-
-export function BarraSuperiorNormal({ texto = "Voltar ao Estúdio", onClick }) {
+export function BarraSuperiorNormal({ texto = "Voltar" }) {
+  const navigate = useNavigate();
   return (
-    <div className="barra-superior" onClick={onClick}>
+    <div className="barra-superior" onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
         <img
         src={SetaRetrocesso}
         alt="Seta de retrocesso"
@@ -46,25 +46,40 @@ export function BarraSuperiorNormal({ texto = "Voltar ao Estúdio", onClick }) {
 }
 
 
-export function BarraSuperiorDashboard({ texto = "Jazzia - Gera, Toca e Jazz!", onClick }) {
+export function BarraSuperiorDashboard({ texto = "Jazzia - Gera, Toca e Jazz!"}) {
   return (
-    <div className="barra-superior" onClick={onClick}>
-        <img
-        src={SetaRetrocesso}
-        alt="Seta de retrocesso"
-        className="icone-seta"
-      />
-      
+    <div className="barra-superior">
+      <div className="texto-subtitulo" style={{textAlign: 'center', width: '85%'}}>
+      {texto}
+      </div>
     </div>
   );
 }
 
 
 export function BarraInferiorDashboard() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Verifica qual é o caminho atual
+  const pathname = location.pathname;
+
   return (
     <div className="barra-inferior">
-    <BotaoDashboard texto="Estúdio"/>
-    <BotaoDashboard texto="Conta"/>
+      <BotaoDashboard 
+        texto="Estúdio" 
+        // Se já estiver em '/estudio', onClick é nulo (ou vazio), senão navega
+        onClick={pathname === '/estudio' ? undefined : () => navigate('/estudio')}
+        // prop 'selected' para estilizar o botão
+        selected={pathname === '/estudio'}
+      />
+      
+      <BotaoDashboard 
+        texto="Conta" 
+        // Se já estiver em '/conta', onClick é nulo, senão navega
+        onClick={pathname === '/conta' ? undefined : () => navigate('/conta')}
+        selected={pathname === '/conta'}
+      />
     </div>
   );
 }

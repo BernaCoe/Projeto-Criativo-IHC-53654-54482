@@ -1,3 +1,5 @@
+// Feito por 53654
+
 import "./componentesGlobais.css";
 
 // Uso:
