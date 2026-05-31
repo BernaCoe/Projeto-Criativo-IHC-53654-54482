@@ -18,14 +18,10 @@ Certifica-te de que tens instalado:
 
 1. Entra na pasta que contém a pasta 'jazzia'
 
-2. Instala as dependências
+2. Instala as dependências e executa
 
-Este é um passo muito importante, sem o qual a nossa aplicação não funciona.
 ```bash
 npm install
 
-3. Execução
-```bash
 cd jazzia
 npm start
-
