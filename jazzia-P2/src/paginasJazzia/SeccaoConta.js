@@ -1,6 +1,7 @@
 // Estética e funcionalidades de interação feitas por 53654
 // Funcionalidades de persistência feita por 54482
 
+import { useClerk } from "@clerk/clerk-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../componentesReact/componentesGlobais.css";
@@ -12,6 +13,7 @@ import { CaixaConta, BotaoConta } from "../componentesReact/SeccaoConta";
 
 function SeccaoConta() {
     const navigate = useNavigate();
+    const { signOut } = useClerk();
     
     // Estado para controlar a edição e os dados
     const [isEditing, setIsEditing] = useState(false);
@@ -19,6 +21,11 @@ function SeccaoConta() {
         nome: "Nome Utilizador", 
         profissao: "Profissão" 
     });
+
+    const handleLogout = async () => {
+    await signOut(); // Executa o logout no Clerk
+    navigate("/");   // Redireciona
+    };
 
     // Simulação do utilizador (Clerk)
     const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
@@ -59,7 +66,7 @@ function SeccaoConta() {
                             <p className="email-display">{user.primaryEmailAddress.emailAddress}</p>
                             
                             <BotaoConta texto="Editar Dados" onClick={() => setIsEditing(true)} />
-                            <BotaoConta texto="Mudar de Conta" onClick={() => navigate("/login")} />
+                            <BotaoConta texto="Mudar de Conta" onClick={handleLogout} />
                         </div>
                     )}
                 </CaixaConta>

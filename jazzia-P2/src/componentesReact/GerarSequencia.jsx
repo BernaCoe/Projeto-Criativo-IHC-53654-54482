@@ -28,44 +28,48 @@ export function CaixaTonalidade({ onSelect, selectedKey }) {
 
 
 
-export function CaixaEstrutura({ onSelect, selectedStructure }) { // <--- Receber aqui
-  const opcoes = ["Aleatório", "AABA", "AABC", "ABAB"];
+// 1. Recebe 'opcoes' como prop
+export function CaixaEstrutura({ onSelect, selectedStructure, opcoes }) {
   
   return (
     <div className="estrutura-container">
       <p className="texto-normal">Estrutura</p>
-      <div className="estrutura-botoes">
+      
+      <select 
+        className="input" 
+        value={selectedStructure || ""} 
+        onChange={(e) => onSelect(e.target.value)}
+      >
         {opcoes.map((opcao) => (
-          <BotaoOpcoesGerarSequencia 
-            key={opcao}
-            texto={opcao} 
-            onClick={() => onSelect(opcao)} 
-            isSelected={selectedStructure === opcao} // <--- Passar aqui
-          />
+          <option key={opcao} value={opcao}>
+            {opcao}
+          </option>
         ))}
-      </div>
+      </select>
+
     </div>
   );
 }
 
 
-export function CaixaModulacao({ onSelect, selectedModulation }) {
-  const opcoes = ["Aleatório", "Relativo", "Dominante", "Sub-dominante", "Paralelo", "Cromático"];
-
+export function CaixaModulacao({ onSelect, selectedModulation, opcoes }) {
   return (
     <div className="modulacao-container">
       <p className="texto-normal">Modulação</p>
-      <div className="modulacao-botoes">
+      
+      <select 
+        className="input" 
+        value={selectedModulation} 
+        onChange={(e) => onSelect(e.target.value)}
+      >
         {opcoes.map((opcao) => (
-          <BotaoOpcoesGerarSequencia 
-            key={opcao}
-            texto={opcao} 
-            onClick={() => onSelect(opcao)} 
-            isSelected={selectedModulation === opcao} // Esta é a chave!
-          />
+          <option key={opcao} value={opcao}>
+            {opcao}
+          </option>
         ))}
-      </div>
+      </select>
+
+
     </div>
   );
 }
-

@@ -3,7 +3,7 @@
 .tonalidade-container {
     margin: 20px auto; /* O "auto" aqui é o que centra o bloco na página */
     width: 330px;
-    height: 220px; /* Ajustei a altura para o novo círculo maior */
+    height: 240px; /* Ajustei a altura para o novo círculo maior */
     border-radius: 25px;
     background: #F9D65C;
     display: flex;
@@ -22,7 +22,7 @@
 
 .estrutura-container{
   width: 330px;
-  height: 100px;
+  height: 80px;
   border-radius: 25px;
   background: #F9D65C;
   align-items: center;
@@ -32,19 +32,22 @@
   justify-content: flex-start;
   padding: 10px 0;
   text-align: left;
+  align-items: center;
 }
 
 .estrutura-container p {
-    margin: 0 0 10px 0; /* Espaço entre o título e o círculo */
+    margin: 0 0 10px 0; 
     width: 100%;
-    padding-left: 20px; /* Alinha o texto à esquerda mantendo o bloco centralizado */
+    padding-top: 10px;
+    padding-left: 20px; 
     box-sizing: border-box;
+    align-items: center;
 }
 
 
 .modulacao-container{
   width: 330px;
-  height: 140px;
+  height: 80px;
   border-radius: 25px;
   background: #F9D65C;
   flex-direction: column;  
@@ -53,13 +56,15 @@
   align-self: center;
   display: flex;
   text-align: left;
+  align-items: center;
 }
 
 .modulacao-container p {
-    margin: 0 0 10px 0; /* Espaço entre o título e o círculo */
+    margin: 0 0 10px 0; 
     width: 100%;
-    padding-left: 20px; /* Alinha o texto à esquerda mantendo o bloco centralizado */
+    padding-left: 20px; 
     box-sizing: border-box;
+    align-items: center;
 }
 
 
