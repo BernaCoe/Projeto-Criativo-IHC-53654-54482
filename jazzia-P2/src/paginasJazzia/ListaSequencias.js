@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react'; // Para obter o email do Clerk
 import { FundoEstudio, BarraSuperiorNormal, BotaoSequenciaGuardada } from "../componentesReact/componentesGlobais";
 import { ModalErroComDecisao } from "../componentesReact/Modais";
@@ -11,7 +11,6 @@ function ListaSequencias() {
 
   const { user } = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
   
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [savedProgressions, setSavedProgressions] = useState([]);
@@ -26,30 +25,44 @@ function ListaSequencias() {
 
 
     useEffect(() => {
-        const fetchProgressionById = async () => {
-            if (!email) return;
+      const fetchUserProgressions = async () => {
+        if (!email) return;
 
-            try {
-                setLoading(true);
-                // O servidor trata de buscar os detalhes completos desta sequência específica
-                const res = await fetch(`${BASE_URL}/api/chords/${email}/${location.state.progression._id}`);
-                const data = await res.json();
-                setSavedProgressions(data);
+        try {
+          setLoading(true);
+          const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
+          if (!res.ok) throw new Error('Falha ao obter sequências guardadas');
+          const data = await res.json();
+          // Espera-se um array de progressões
+          setSavedProgressions(Array.isArray(data) ? data : []);
+        } catch (err) {
+          setError(err.message);
+          setShowErrorModal(true);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-            } catch (err) {
-                setShowErrorModal(true);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProgressionById();
-    }, [email, location.state, BASE_URL]);
+      fetchUserProgressions();
+    }, [email, BASE_URL]);
 
   // Ordenação
-  const sorted = [...savedProgressions].sort((a, b) =>
-    sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+  const sorted = [...(savedProgressions || [])].sort((a, b) =>
+    sortOrder === 'asc'
+      ? (a.name || '').localeCompare(b.name || '')
+      : (b.name || '').localeCompare(a.name || '')
   );
+
+  if (loading) {
+    return (
+      <div className='pagina-conteudo'>
+        <FundoEstudio>
+          <BarraSuperiorNormal />
+          <div className="guardados-loading">A carregar sequências...</div>
+        </FundoEstudio>
+      </div>
+    );
+  }
 
   if (error) return <div>Erro: {error}</div>;
 
@@ -65,10 +78,10 @@ function ListaSequencias() {
           <div>
             {sorted.map((sequencia) => (
               <BotaoSequenciaGuardada
-                key={sequencia.id} 
-                texto={sequencia.name} 
-                onClick={() => navigate("/sequenciaGuardada", { 
-                    state: { progression: { _id: sequencia._id } } 
+                key={sequencia._id}
+                texto={sequencia.name}
+                onClick={() => navigate("/sequenciaGuardada", {
+                  state: { progression: sequencia }
                 })}
               />
             ))}

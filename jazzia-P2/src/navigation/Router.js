@@ -3,6 +3,8 @@
 import React from "react";
 import {Routes, Route } from "react-router-dom";
 
+import { SignIn } from '@clerk/clerk-react'
+
 import GerarSequencia from "../paginasJazzia/GerarSequencia";
 import ListaSequencias from "../paginasJazzia/ListaSequencias";
 import Login from "../paginasJazzia/Login";
@@ -19,6 +21,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<PaginaEntrada />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registo" element={<SignIn />} />
         <Route path="/estudio" element={<SeccaoEstudio />} />
 
         <Route path="/gerarSequencia" element={<GerarSequencia/>} />

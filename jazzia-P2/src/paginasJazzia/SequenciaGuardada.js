@@ -39,37 +39,45 @@ function SequenciaGuardada(){
 
 
 useEffect(() => {
-    
-    if (!location.state?.progression && email) {
-        // Aqui pode-se ir procurar pelo ID
-        // loadSavedProgressions(); 
+    if ((!location.state?.progression || !location.state?.progression.chords) && email) {
+        const fetchProgressionById = async () => {
+            const id = location.state?.progression?._id;
+            if (!id) return;
+
+            try {
+                setLoading(true);
+                const res = await fetch(`${BASE_URL}/api/chords/${email}/${id}`);
+                if (!res.ok) throw new Error('Falha ao carregar sequência');
+                const data = await res.json();
+                setSavedProgressions(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProgressionById();
     }
 }, [email, location.state]);
 
 
-    const loadSavedProgressions = async () => {
-        if (!savedProgression && !email) {
-            return (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                    <ClipLoader color="#D4AF37" size={50} />
-                </div>
-            );
-        }
-    
-        try {
-          const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
-          const data = await res.json();
-          setSavedProgressions(data);
-        } catch (err) {
-          setError(err.message);
-        }
-      };
-    
-      useEffect(() => {
-        if (email) loadSavedProgressions();
-    }, [email]);
+        // Quando necessário, a sequência é carregada pelo _id no efeito acima.
 
 
+
+    if (loading) {
+        return (
+            <div className="pagina-conteudo">
+                <FundoEstudio>
+                    <BarraSuperiorNormal />
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+                        <ClipLoader color="#D4AF37" size={50} />
+                    </div>
+                </FundoEstudio>
+            </div>
+        );
+    }
 
     const convertToMp3 = async () => {
         if (!savedProgression?.chords) return;
@@ -95,9 +103,9 @@ useEffect(() => {
                 method: "DELETE"
             });
 
-            if (res.ok) {
+                if (res.ok) {
                 setShowSucesso(true);
-                setTimeout(() => navigate("/listaSequencia"), 2000);
+                setTimeout(() => navigate("/listaSequencias"), 2000);
             } else {
                 throw new Error("Falha ao eliminar");
             }
@@ -114,6 +122,12 @@ useEffect(() => {
         <div className="pagina-conteudo">
         <FundoEstudio>
             <BarraSuperiorNormal/>
+
+            {error && (
+                <div className="erro-mensagem" style={{ color: '#ff4747', margin: '16px 0', textAlign: 'center' }}>
+                    Erro: {error}
+                </div>
+            )}
 
             {savedProgression && (
                 <CaixaSequenciaGerada texto='Sequência Gerada'>
