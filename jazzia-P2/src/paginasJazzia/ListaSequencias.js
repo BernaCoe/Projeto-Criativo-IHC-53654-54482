@@ -22,44 +22,43 @@ function ListaSequencias() {
   // Obtém o email do Clerk
   const email = user?.primaryEmailAddress?.emailAddress;
   const BASE_URL = "https://genjazz-api.fly.dev";
+  const USE_MOCK = true;
 
 
 
-    useEffect(() => {
-        
-        console.log("State recebido:", location.state);
-        
-        const fetchProgressionById = async () => {
-            
-        if (location.state?.progression) {
-            setSavedProgressions(location.state.progression);
-            return;
-        }
 
-        // Caso contrário, tenta buscar pelo ID se existir
-        const id = location.state?.progression?._id;
-        if (!email || !id) {
-            console.warn("Falta email ou ID:", { email, id });
-            return;
-        }
+  const loadSavedProgressions = async () => {
+    if (USE_MOCK) {
+      // Dados estáticos de exemplo
+      const mockData = [
+        { _id: '1', id: '1', name: 'Progressão Jazz II-V-I' },
+        { _id: '2', id: '2', name: 'Blues em Fá' }
+      ];
+      setSavedProgressions(mockData);
+      setLoading(false);
+      return;
+    }
 
-            try {
-                setLoading(true);
-                // O servidor trata de buscar os detalhes completos desta sequência específica
-                const res = await fetch(`${BASE_URL}/api/chords/${email}/${location.state.progression._id}`);
-                const data = await res.json();
-                
-                setSavedProgressions(data);
+    if (!email) return;
 
-            } catch (err) {
-                setShowErrorModal(true);
-            } finally {
-                setLoading(false);
-            }
-        };
+    try {
+      setLoading(true);
+      const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
+      const data = await res.json();
+      setSavedProgressions(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError(err.message);
+      setShowErrorModal(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        fetchProgressionById();
-    }, [email, location.state, BASE_URL]);
+  useEffect(() => {
+    loadSavedProgressions();
+  }, [email]);
+
+
 
   // Ordenação
   const sorted = [...savedProgressions].sort((a, b) =>
