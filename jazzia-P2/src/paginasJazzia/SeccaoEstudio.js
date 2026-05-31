@@ -33,16 +33,6 @@ function SeccaoEstudio() {
             </>
           )}
 
-          {tab === 'conta' && (
-            <div className="menu-conta">
-              <p className="menu-conta-text">Definições de conta</p>
-              <AppButton
-                label="Terminar Sessão"
-                variant="rosa"
-                onClick={() => signOut(() => navigate('/listaSequencias'))}
-              />
-            </div>
-          )}
         </div>
 
         <BarraInferiorDashboard />

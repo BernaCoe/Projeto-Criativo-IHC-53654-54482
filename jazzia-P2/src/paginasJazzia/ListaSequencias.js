@@ -26,14 +26,29 @@ function ListaSequencias() {
 
 
     useEffect(() => {
+        
+        console.log("State recebido:", location.state);
+        
         const fetchProgressionById = async () => {
-            if (!email) return;
+            
+        if (location.state?.progression) {
+            setSavedProgressions(location.state.progression);
+            return;
+        }
+
+        // Caso contrário, tenta buscar pelo ID se existir
+        const id = location.state?.progression?._id;
+        if (!email || !id) {
+            console.warn("Falta email ou ID:", { email, id });
+            return;
+        }
 
             try {
                 setLoading(true);
                 // O servidor trata de buscar os detalhes completos desta sequência específica
                 const res = await fetch(`${BASE_URL}/api/chords/${email}/${location.state.progression._id}`);
                 const data = await res.json();
+                
                 setSavedProgressions(data);
 
             } catch (err) {

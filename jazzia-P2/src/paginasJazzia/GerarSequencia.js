@@ -156,11 +156,13 @@ function GerarSequencia(){
               <CaixaEstrutura 
               onSelect={setSelectedStructure} 
               selectedStructure={selectedStructure}
+              opcoes={structures}
               />
 
               <CaixaModulacao 
               onSelect={setSelectedModulation} 
               selectedModulation={selectedModulation}
+              opcoes={modulations}
               />
 
               <BotaoNormal 
@@ -174,7 +176,7 @@ function GerarSequencia(){
 
               {/* Mensagem informativa */}
               {!isFormComplete && (
-                  <p style={{ color: '#A25F19', textAlign: 'center', marginTop: '10px' }}>
+                  <p style={{ color: '#000000', textAlign: 'center', marginTop: '10px', backgroundColor: 'gold', height:'50px', alignContent: 'center'}}>
                       Selecione as 3 propriedades para gerar.
                   </p>
               )}
