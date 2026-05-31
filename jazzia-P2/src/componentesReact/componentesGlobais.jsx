@@ -4,7 +4,6 @@ import React from "react";
 import {useNavigate, useLocation } from 'react-router-dom';
 import "./componentesGlobais.css";
 import SetaRetrocesso from "../Componentes-Figma/SetaRetrocesso.png";
-import BotaoEstudio from '../Componentes-Figma/Botao-seccao-estudio.png';
 
 // Como usar estes componentes:
 // import {FundoEstudio, FundoConta, BotaoGrandeEstudio, FundoLogin, FundoEntrada, BarraSuperiorNormal, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoDashboard, BotaoOpcoesGerarSequencia, BotaoNormal, BotaoNaoPopUp, BotaoSimPopUp} from "./componentesGlobais";
@@ -51,15 +50,22 @@ export function FundoConta({ children }) {
 
 
 
-export function BarraSuperiorNormal({ texto = "Voltar" }) {
+export function BarraSuperiorNormal({ texto = "Voltar", to }) {
   const navigate = useNavigate();
+  
+  const handleClick = () => {
+    if (to) {
+      // Se um destino foi especificado, vai para lá
+      navigate(to);
+    } else {
+      // Caso contrário, tenta o histórico
+      navigate(-1);
+    }
+  };
+
   return (
-    <div className="barra-superior" onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
-        <img
-        src={SetaRetrocesso}
-        alt="Seta de retrocesso"
-        className="icone-seta"
-      />
+    <div className="barra-superior" onClick={handleClick} style={{ cursor: 'pointer' }}>
+      <img src={SetaRetrocesso} alt="Seta de retrocesso" className="icone-seta" />
       <span className="texto-normal">{texto}</span>
     </div>
   );
@@ -118,7 +124,6 @@ export function BotaoDashboard({ texto, onClick }) {
 
 
 export function BotaoOpcoesGerarSequencia({ texto, onClick, isSelected }) {
-  // Vamos imprimir no console para ver se o React acha que está selecionado
   console.log(`Botão ${texto} - isSelected: ${isSelected}`);
 
   return (
@@ -155,11 +160,10 @@ export function BotaoGrandeEstudio({ onClick, texto }) {
 
 
 
-export function BotaoSequenciaGuardada({ onClick, texto, key }) {
+export function BotaoSequenciaGuardada({ onClick, texto }) {
   return (
     <button className="botao-sequencia-guardada" onClick={onClick}>
-      {texto}
-      {key}
+      {texto || "Nome Indefinido - Consulte IndexedD"}
     </button>
   );
 }

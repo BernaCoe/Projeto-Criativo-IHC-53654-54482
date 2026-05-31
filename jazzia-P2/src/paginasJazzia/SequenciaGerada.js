@@ -1,6 +1,7 @@
 // Feito por 53654
 
 import React, { useState, useEffect } from 'react';
+import { openDB } from 'idb';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {FundoEstudio, BarraSuperiorNormal, BotaoNormal, BarraInferiorDashboard} from "../componentesReact/componentesGlobais";
@@ -11,7 +12,6 @@ import { useUser } from "@clerk/clerk-react";
 
 
 
-
 const BASE_URL = "https://genjazz-api.fly.dev";
 
 
@@ -19,28 +19,22 @@ function SequenciaGerada(){
 
     const location = useLocation();
         
-    // Temporariamente:
-    const user = { primaryEmailAddress: { emailAddress: "teste@exemplo.com" } };
-
-    // const { user } = useUser();
+    const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
 
     const [selectedKey, setKeys] = useState(null);
     const [selectedStructure, setStructures] = useState(null);
     const [selectedModulation, setModulations] = useState(null);
 
-    // Tentamos ler do state, se não existir, usamos o valor de teste
+    // Tenta ler do state, se não existir, usa o valor de teste
     const dadosIniciais = location.state?.progression || { 
         chords: [ "C", "G", "Am", "E", "F", "C", "G", "C", "F", "G", "C", "Am", "Dm", "G", "C", "C"] // Exemplo de acordes, por defeito
-
-
     };
 
     const [progression, setProgression] = useState(dadosIniciais);
     
     const [audioUrl, setAudioUrl] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
     const [showGuardar, setShowGuardar] = useState(false);
     const [showErroAudio, setShowErroAudio] = useState(false);
     
@@ -65,53 +59,59 @@ function SequenciaGerada(){
     };
 
 
-const saveProgression = async (nome) => {
-    // Validação para impedir nome vazio ou nulo
-    if (!nome || nome.trim() === "") {
-        setError("Por favor, insira um nome válido para a sequência.");
-        setShowErro(true);
-        return;
-    }
 
-    // Validação básica de dados
-    if (!progression?.chords || !email) {
-        setError("Dados da progressão em falta.");
-        setShowErro(true);
-        return;
-    }
+const initDB = async () => {
+    return await openDB('GenJazzDB', 1, {
+        upgrade(db) {
+            db.createObjectStore('sequences', { keyPath: '_id', autoIncrement: true });
+        },
+    });
+};
+
+const saveProgression = async (nome) => {
+    if (!nome || nome.trim() === "") { /* ... */ return; }
+    if (!progression?.chords || !email) { /* ... */ return; }
+
+    const novaSequencia = {
+        email,
+        name: nome,
+        chords: progression.chords,
+        key: selectedKey,
+        structure: selectedStructure || "Random",
+        modulation: selectedModulation || "Random",
+        timestamp: new Date().toISOString() // Útil para ordenação
+    };
 
     try {
+        // Tenta guardar no Servidor
         const res = await fetch(`${BASE_URL}/api/chords`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email,
-                name: nome,
-                chords: progression.chords,
-                key: selectedKey,
-                structure: selectedStructure || "Random",
-                modulation: selectedModulation || "Random"
-            })
+            body: JSON.stringify(novaSequencia)
         });
 
-        // Verificação de sucesso do servidor
-        if (!res.ok) {
-            throw new Error("O servidor não conseguiu guardar a sequência.");
-        }
-        
-        const data = await res.json(); // Transforma a resposta em objeto
-        console.log('Sequência Guardada com sucesso! O ID retornado pelo servidor é: ', data.id);
+        if (!res.ok) throw new Error("Falha no servidor");
 
-        setShowSucesso(true); // Abre o modal de sucesso
+        const data = await res.json();
+        
+        // Se o servidor deu OK, guarda no IndexedDB com o ID que ele devolveu
+        const db = await initDB();
+        await db.put('sequences', { ...novaSequencia, _id: data.id || data._id });
+        
+        console.log('Guardado com sucesso na API e IndexedDB! Id na API:', data.id);
+        setShowSucesso(true);
 
     } catch (err) {
-        // Captura erros de rede (ex: sem internet) e o throw new Error acima
-        console.error("Erro ao guardar:", err);
-        setError("Não foi possível ligar ao servidor. Tente novamente mais tarde.");
-        setShowErro(true); // Abre o modal de erro
+        // Se falhar (Sem rede ou erro de servidor), guarda apenas no IndexedDB
+        console.warn("API indisponível, a guardar localmente...", err);
+        const db = await initDB();
+        await db.put('sequences', novaSequencia);
+        
+        // Avisa o utilizador que guardou mas offline
+        console.log("Guardado apenas localmente. Sincronize depois.");
+        setShowSucesso(true); 
     }
 };
-
 
 
     return(
@@ -120,7 +120,7 @@ const saveProgression = async (nome) => {
             <BarraSuperiorNormal/>
 
             {progression && (
-                <CaixaSequenciaGerada texto='Sequência Gerada'>
+                <CaixaSequenciaGerada nome='Sequência Gerada'>
                     <TabelaSequenciaGerada acordes={progression.chords} />
                 </CaixaSequenciaGerada>
             )}

@@ -1,106 +1,154 @@
+// Feito por 54482 e 53654
+
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react'; // Para obter o email do Clerk
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 import { FundoEstudio, BarraSuperiorNormal, BotaoSequenciaGuardada } from "../componentesReact/componentesGlobais";
 import { ModalErroComDecisao } from "../componentesReact/Modais";
 import '../componentesReact/ListaSequencias.css';
-
-
+import { openDB } from 'idb';
 
 function ListaSequencias() {
 
   const { user } = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
   
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [savedProgressions, setSavedProgressions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
+
 
   // Obtém o email do Clerk
   const email = user?.primaryEmailAddress?.emailAddress;
   const BASE_URL = "https://genjazz-api.fly.dev";
-  const USE_MOCK = true;
 
 
 
 
-  const loadSavedProgressions = async () => {
-    if (USE_MOCK) {
-      // Dados estáticos de exemplo
-      const mockData = [
-        { _id: '1', id: '1', name: 'Progressão Jazz II-V-I' },
-        { _id: '2', id: '2', name: 'Blues em Fá' }
-      ];
-      setSavedProgressions(mockData);
-      setLoading(false);
-      return;
+const loadSavedProgressions = async () => {
+    
+    setLoading(true);
+
+    let dadosDaAPI = [];
+
+    // Tenta buscar da API
+    if (email) {
+        try {
+            const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
+            if (res.ok) {
+                dadosDaAPI = await res.json();
+                
+                // Se a API respondeu, garante que abase local está atualizada
+                if (Array.isArray(dadosDaAPI)) {
+                  const db = await openDB('GenJazzDB', 1, {
+                      upgrade(db) { db.createObjectStore('sequences', { keyPath: '_id' }); }
+                  });
+                  
+                  const tx = db.transaction('sequences', 'readwrite');
+                  const store = tx.store;
+
+                  for (const itemApi of dadosDaAPI) {
+                      // Tenta buscar o que já tem localmente
+                      const itemLocal = await store.get(itemApi._id);
+                      
+                      // Faz o 'merge': mantem o nome local (se existir), 
+                      //    mas atualiza os acordes da API (caso tenham mudado)
+                      const itemAtualizado = {
+                          ...itemApi,
+                          name: itemLocal?.name || itemApi.name || "Nome Indefinido - Consulte IndexedD"
+                      };
+                      
+                      // Guarda o resultado final e preserva o nome
+                      await store.put(itemAtualizado);
+                  }
+                  await tx.done;
+              }
+            }
+        } catch (err) {
+            console.warn("API indisponível, a usar dados locais.");
+        }
     }
 
-    if (!email) return;
-
+    // Se a API falhou ou está vazia, vai buscar tudo o que está no IndexedDB
     try {
-      setLoading(true);
-      const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
-      const data = await res.json();
-      setSavedProgressions(Array.isArray(data) ? data : []);
-    } catch (err) {
-      setError(err.message);
-      setShowErrorModal(true);
-    } finally {
-      setLoading(false);
+        const db = await openDB('GenJazzDB', 1);
+        const dadosLocais = await db.getAll('sequences');
+        
+        // Combina os dados da API com os dados locais
+        const dadosFinais = dadosDaAPI.map(itemApi => {
+            // Procura se este item da API existe na IndexedDB com um nome definido
+            const local = dadosLocais.find(l => l._id === itemApi._id);
+            
+            return {
+                ...itemApi, // Dados da API
+                // Usa o nome local se existir, senão usa o da API, senão "Sem nome"
+                name: local?.name || itemApi.name || "Sem nome"
+            };
+        });
+        
+        setSavedProgressions(dadosFinais);
+    } catch (dbErr) {
+        setSavedProgressions(dadosDaAPI || []);
     }
-  };
-
+    
+    setLoading(false);
+};
   useEffect(() => {
-    loadSavedProgressions();
-  }, [email]);
+      loadSavedProgressions();
+    }, [email]); 
+
+
 
 
 
   // Ordenação
   const sorted = [...savedProgressions].sort((a, b) =>
-    sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-  );
+      sortOrder === 'asc' 
+        ? (a.name || "").localeCompare(b.name || "") 
+        : (b.name || "").localeCompare(a.name || "")
+    );
 
-  if (error) return <div>Erro: {error}</div>;
+
 
   return (
-    <div className='pagina-conteudo'>
-      <FundoEstudio>
-        <BarraSuperiorNormal />
-        <div className="guardados-content">
-          <button className="guardados-sort" onClick={() => setSortOrder(o => o === 'asc' ? 'desc' : 'asc')}>
-            Ordem: {sortOrder === 'asc' ? 'A–Z' : 'Z–A'}
-          </button>
+  <div className='pagina-conteudo'>
+    <FundoEstudio>
+      <BarraSuperiorNormal to="/estudio" />
+      <div className="guardados-content" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+        <button className="guardados-sort" onClick={() => setSortOrder(o => o === 'asc' ? 'desc' : 'asc')}>
+          Ordem: {sortOrder === 'asc' ? 'A–Z' : 'Z–A'}
+        </button>
 
-          <div>
-            {sorted.map((sequencia) => (
+        <div className="guardados-list">
+          {sorted.map((sequencia) => {
+            const idBruto = sequencia._id || sequencia.id || "0000";
+            const idCurto = String(idBruto).slice(-4).toUpperCase();
+            const textoBotao = `Progressão ${idCurto} - ${sequencia.chords ? sequencia.chords.substring(0, 15) + "..." : "Sem acordes"}`;
+
+            return (
               <BotaoSequenciaGuardada
-                key={sequencia.id} 
-                texto={sequencia.name} 
-                onClick={() => navigate("/sequenciaGuardada", { 
-                    state: { progression: { _id: sequencia._id } } 
-                })}
+                key={sequencia._id || sequencia.id}
+                texto={textoBotao}
+                onClick={() => navigate("/sequenciaGuardada", { state: { progression: sequencia } })}
               />
-            ))}
-          </div>
+            );
+          })}
         </div>
+      </div>
 
-        {showErrorModal && (
-            <ModalErroComDecisao 
-            mensagem={'Não foi possível carregar dados do servidor. Tentar novamente?'}
-            onClose={() => setShowErrorModal(false)} // Fecha o modal
-            onConfirm={() => {
-                setShowErrorModal(false);
-                window.location.reload(); 
-            }}
-            />
-        )}
-      </FundoEstudio>
-    </div>
+      {showErrorModal && (
+        <ModalErroComDecisao 
+          mensagem={'Não foi possível carregar dados do servidor. Tentar novamente?'}
+          onClose={() => setShowErrorModal(false)}
+          onConfirm={() => {
+            setShowErrorModal(false);
+            window.location.reload(); 
+          }}
+        />
+      )}
+    </FundoEstudio>
+  </div>
   );
 }
 

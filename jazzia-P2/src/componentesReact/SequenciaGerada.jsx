@@ -13,7 +13,7 @@ export function CaixaSequenciaGerada({ nome, children }) {
     const caixaStyle = {
         width: '270px',
         minHeight: '200px',
-        backgroundColor: '#F9D65C', // A tua cor amarela
+        backgroundColor: '#F9D65C',
         borderRadius: '25px',
         display: 'flex',
         flexDirection: 'column',
@@ -22,7 +22,7 @@ export function CaixaSequenciaGerada({ nome, children }) {
         marginTop: '100px',
         gap: '25px',
         margin: '25px',
-        position: 'relative' // Importante para não colidir com o fluxo
+        position: 'relative'
     };
 
     return (
@@ -35,12 +35,14 @@ export function CaixaSequenciaGerada({ nome, children }) {
 
 
 
-// Recebe um array 'acordes' (ex: ["C", "Am", "Dm", "G", ...])
+
 export function TabelaSequenciaGerada({ acordes }) {
   // Converte a string vinda da API num array
-  // Se 'acordes' for uma string como "Dm7|G7|...", o split cria o array ["Dm7", "G7", ...]
+
+  console.log("O que chegou à tabela:", acordes);
   const listaAcordes = typeof acordes === 'string' ? acordes.split('|') : acordes;
   
+
   if (!acordes || acordes.length === 0) return null;
 
   // 8 células de tabela (para 16 acordes)
@@ -52,11 +54,10 @@ export function TabelaSequenciaGerada({ acordes }) {
     celulas.push(`${acorde1} - ${acorde2}`);
   }
 
-  // Estilos inline encapsulados
   const tableStyle = {
     width: '240px',
     borderCollapse: 'collapse',
-    backgroundColor: '#FBEAAE', // A tua cor de fundo
+    backgroundColor: '#FBEAAE',
     margin: '0 auto',
     border: '1px solid #848484'
   };
@@ -66,8 +67,8 @@ export function TabelaSequenciaGerada({ acordes }) {
     height: '35px',
     paddingLeft: '10px',
     fontSize: '14px',
-    color: '#000000', // Texto
-    backgroundColor: '#FBEAAE' // Fundo da célula
+    color: '#000000',
+    backgroundColor: '#FBEAAE'
   };
 
   return (

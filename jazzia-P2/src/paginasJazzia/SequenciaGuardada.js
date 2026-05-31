@@ -8,7 +8,8 @@ import "../componentesReact/componentesGlobais.css";
 import {TabelaSequenciaGerada, CaixaSequenciaGerada} from '../componentesReact/SequenciaGerada';
 import {ModalSucesso, ModalErroInformativo, ModalAtencao} from "../componentesReact/Modais"
 import { useUser } from "@clerk/clerk-react";
-
+import { openDB } from 'idb';
+import LoadingScreen from "../componentesReact/LoadingScreen";
 
 
 
@@ -19,17 +20,15 @@ function SequenciaGuardada(){
 
     const location = useLocation();
     const navigate = useNavigate();
-        
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
 
-    const [savedProgression, setSavedProgressions] = useState(
+    const [savedProgression, setSavedProgression] = useState(
         location.state?.progression || null
     );
 
     const [audioUrl, setAudioUrl] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showErroAudio, setShowErroAudio] = useState(false);
     
@@ -38,36 +37,38 @@ function SequenciaGuardada(){
 
 
 
-useEffect(() => {
-    
-    if (!location.state?.progression && email) {
-        // Aqui pode-se ir procurar pelo ID
-        // loadSavedProgressions(); 
+    useEffect(() => {
+        
+        if (!location.state?.progression && email) {
+            // Aqui pode-se ir procurar pelo ID
+           // loadSavedProgressions(); 
+        }
+    }, [email, location.state]);
+
+
+const loadSavedProgressions = async () => {
+    try {
+        const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
+        const data = await res.json();
+        
+        const idParaBuscar = location.state?.progression?.id;
+        const encontrada = data.find(item => item.id === idParaBuscar);
+        
+        if (encontrada) {
+            console.log("Objeto encontrado na API:", encontrada);
+            setSavedProgression(encontrada); 
+        }
+    } catch (err) {
+        setError(err.message);
     }
-}, [email, location.state]);
+};
 
-
-    const loadSavedProgressions = async () => {
-        if (!savedProgression && !email) {
-            return (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                    <ClipLoader color="#D4AF37" size={50} />
-                </div>
-            );
+    useEffect(() => {
+        // Só carrega se não tiver os dados no state
+        if (email && !savedProgression) {
+            loadSavedProgressions();
         }
-    
-        try {
-          const res = await fetch(`${BASE_URL}/api/chords/user/${email}`);
-          const data = await res.json();
-          setSavedProgressions(data);
-        } catch (err) {
-          setError(err.message);
-        }
-      };
-    
-      useEffect(() => {
-        if (email) loadSavedProgressions();
-    }, [email]);
+    }, [email, savedProgression]);
 
 
 
@@ -91,19 +92,25 @@ useEffect(() => {
         if (!email || !id) return;
 
         try {
+            // Tenta eliminar no servidor
             const res = await fetch(`${BASE_URL}/api/chords/${email}/${id}`, {
                 method: "DELETE"
             });
 
-            if (res.ok) {
-                setShowSucesso(true);
-                setTimeout(() => navigate("/listaSequencia"), 2000);
-            } else {
-                throw new Error("Falha ao eliminar");
-            }
+            if (!res.ok) throw new Error("Falha ao eliminar no servidor");
+
+            // Se o servidor OK, elimina também da IndexedDB
+            const db = await openDB('GenJazzDB', 1);
+            await db.delete('sequences', id); 
+
+            // Sucesso total
+            setShowSucesso(true);
+            setTimeout(() => navigate("/listaSequencias"), 1000);
+
         } catch (err) {
+            console.error("Erro ao eliminar:", err);
             setError(err.message);
-            setShowErro(true); // Abre o modal de erro
+            setShowErro(true);
         }
     };
 
@@ -113,12 +120,25 @@ useEffect(() => {
     return(
         <div className="pagina-conteudo">
         <FundoEstudio>
-            <BarraSuperiorNormal/>
+            <BarraSuperiorNormal to="/listaSequencias" />
 
             {savedProgression && (
-                <CaixaSequenciaGerada texto='Sequência Gerada'>
-                    <TabelaSequenciaGerada acordes={savedProgression.chords} />
-                </CaixaSequenciaGerada>
+                (() => {
+                    // 1. Extrai o ID e formata
+                    const idBruto = savedProgression._id || savedProgression.id || "0000";
+                    const idCurto = String(idBruto).slice(-4).toUpperCase();
+                    
+                    // Define o título apenas como "Progressão" + ID
+                    const tituloFinal = `Progressão ${idCurto}`;
+
+                    return (
+                        <CaixaSequenciaGerada nome={tituloFinal}>
+                            <TabelaSequenciaGerada 
+                                acordes={savedProgression.chords || savedProgression} 
+                            />
+                        </CaixaSequenciaGerada>
+                    );
+                })()
             )}
 
             {audioUrl && (
@@ -146,13 +166,11 @@ useEffect(() => {
             {showDelete && (
                 <ModalAtencao
                     mensagem="Pretende mesmo eliminar esta sequência?"
-                    onClose={() => setShowDelete(false)}
+                    onClose={() => setShowDelete(false) }
                     onConfirm={() => {
-                        // Fecha o modal
                         setShowDelete(false); 
-                        // 2. Chama a função passando o ID correto
-                        // (savedProgression tem de ter o campo _id ou id)
-                        deleteProgression(savedProgression._id); 
+                        deleteProgression(savedProgression.id);
+                        console.log('Progressão eliminada! ID', savedProgression.id); 
                     }}
                 />
             )}

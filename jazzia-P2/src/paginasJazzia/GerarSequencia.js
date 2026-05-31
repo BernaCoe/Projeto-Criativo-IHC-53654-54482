@@ -2,14 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { ClipLoader } from "react-spinners";
+import LoadingScreen from "../componentesReact/LoadingScreen";
 
 import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReact/componentesGlobais";
 import "../componentesReact/componentesGlobais.css";
 import "../componentesReact/GerarSequencia.css";
 import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "../componentesReact/GerarSequencia";
-// import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from 'react-router-dom';
-
 import {ModalErroComDecisao} from "../componentesReact/Modais.jsx"
 
 
@@ -70,7 +69,6 @@ function GerarSequencia(){
             .then(res => res.json())
             .then(data => console.log("Modulações válidas:", data));
 
-
           } catch (err) {
             setError(err.message);
           } finally {
@@ -82,64 +80,45 @@ function GerarSequencia(){
       }, []);
 
 
-      if (loading) return (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-            <ClipLoader color="#CB7822" size={50} />
-        </div>
-      );
+      if (loading) return <LoadingScreen />;
 
 
     
-    const generateProgression = async () => {
-      try {
+const generateProgression = async () => {
+    try {
         setLoading(true);
-        // Traduz apenas para os termos que não estão na lista da API
-        const traducao = {
-            "Aleatório": "Random",
-            "Dominante": "Dominant",
-            "Sub-Dominante": "Sub-Dominant",
-            "Paralelo": "Parallel",
-            "Relativo": "Relative",
-            "Cromático": "Chromatic"
-        };
 
+        // Define valores padrão caso o utilizador não tenha selecionado nada
+        const key = selectedKey || "Random";
+        const structure = selectedStructure || "Random";
+        const modulation = selectedModulation || "Random";
 
-        const processarParametro = (valor, ehChave) => {
-            // Se for uma tonalidade/chave, não traduz, usa o valor original
-            if (ehChave) return valor; 
-            // Se for outro termo (estrutura/modulação), tenta traduzir
-            return traducao[valor] || valor;
-        };
+        const url = `${BASE_URL}/api/generate/${encodeURIComponent(key)}/${encodeURIComponent(structure)}/${encodeURIComponent(modulation)}`;
+        
+        const res = await fetch(url);
+        console.log("URL final enviada:", url);
 
-        const key = encodeURIComponent(processarParametro(selectedKey || "Random", true));
-        const structure = encodeURIComponent(processarParametro(selectedStructure || "Random", false));
-        const modulation = encodeURIComponent(processarParametro(selectedModulation || "Random", false));
-        // const res = await fetch(`${BASE_URL}/api/generate/${key}/${structure}/${modulation}`);
-
-        const url = `${BASE_URL}/api/generate/${key}/${structure}/${modulation}`;
-        const res = await fetch(url);  
-        console.log("URL final enviada:", url); // para debug   
-          
         if (res.status === 500) {
-            throw new Error("combinação_indisponivel");
+            throw new Error("Combinação indisponível");
         }
-        if (!res.ok) throw new Error("Falha na rede");
+        if (!res.ok) {
+            throw new Error("Falha no servidor");
+        }
 
         const data = await res.json();
 
         setProgression(data);
         setAudioUrl(null);
-        navigate('/sequenciaGerada', { state: { progression: data } }); // Passa os dados aqui para a página seguinte
+        navigate('/sequenciaGerada', { state: { progression: data } });
         
-      } catch (err) {
-          console.error("Erro capturado:", err.message);
-          // Se for 500, guarda um erro específico
-          setError(err.message); 
-          setShowErro(true);
-      } finally {
-          setLoading(false);
-      }
-  };
+    } catch (err) {
+        console.error("Erro capturado:", err.message);
+        setError(err.message);
+        setShowErro(true);
+    } finally {
+        setLoading(false);
+    }
+};
 
 
 
@@ -184,7 +163,7 @@ function GerarSequencia(){
       
               {showErro && (
                   <ModalErroComDecisao 
-                      // Se for erro 500, a mensagem é mais informativa
+                      // Se for erro 500, a mensagem é informativa
                       mensagem={error === "combinação_indisponivel" 
                           ? "Esta combinação ainda não está disponível na base de dados. Por favor, tente outra." 
                           : "Falha na ligação. Tentar novamente?"}

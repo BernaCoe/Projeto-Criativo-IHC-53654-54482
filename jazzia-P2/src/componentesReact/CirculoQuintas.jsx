@@ -18,11 +18,11 @@ const MINOR = ["Amin", "Emin", "Bmin", "F#min", "C#min", "G#min", "Ebmin", "Bbmi
 const INVALID_KEYS = ["F#", "C#", "G#", "D#", "A#", "F#m", "C#m", "G#m", "D#m", "A#m"];
 
 function CirculoQuintas({ onSelect, selectedKey }) {
-  const size = 360;
+  const size = 370;
   const center = size / 2;
-  const rMajor = 140;
-  const rMinor = 80;
-  // const rInner = 30;
+  const rMajor = 145;
+  const rMinor = 90;
+  // const rInner9= 30;
 
 
 
@@ -31,14 +31,14 @@ return (
       {/* Camadas de fundo ajustadas para envolverem as notas com margem uniforme */}
       <circle cx={center} cy={center} r={rMajor + 30} fill="#FBEAAE" stroke="#6D3E0D" strokeWidth="2" style={{ pointerEvents: 'none' }} />
       <circle cx={center} cy={center} r={(rMajor + rMinor) / 2} fill="#FBEAAE" stroke="#6D3E0D" strokeWidth="2" style={{ pointerEvents: 'none' }} />
-      <circle cx={center} cy={center} r={rMinor - 30} fill="#fcf8ec" stroke="#6D3E0D" strokeWidth="2" style={{ pointerEvents: 'none' }} />
+      <circle cx={center} cy={center} r={rMinor - 35} fill="#fcf8ec" stroke="#6D3E0D" strokeWidth="2" style={{ pointerEvents: 'none' }} />
       
       {/* Notas Maiores e Menores */}
       {[...MAJOR, ...MINOR].map((note, i) => {
         const isMajor = i < 12;
         const index = isMajor ? i : i - 12;
         const radius = isMajor ? rMajor : rMinor;
-        const noteSize = isMajor ? 26 : 20;
+        const noteSize = isMajor ? 26 : 22;
         const angle = (2 * Math.PI * index) / 12 - Math.PI / 2;
 
         const isInvalid = INVALID_KEYS.includes(note);

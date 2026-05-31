@@ -41,7 +41,7 @@
     border-radius: 15px;
     border: 1px solid #d4b035;
     background: #fff;
-    font-family: inherit;
+    font-family: Armata;
     font-size: 14px;
     outline: none;
 }
@@ -65,18 +65,18 @@
     border: 2px solid #D3B0FE;
     background-color: #FFF9E6; 
     margin-top: -15px;
-    font-family: inherit;
+    font-family: Armata;
     font-size: 14px;
     color: #000000; 
     
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Garante que o padding não aumenta a largura */
+    box-sizing: border-box;
 }
 
-/* Efeito ao clicar no campo */
+
 .input-seccao-conta:focus {
     outline: none;
-    border-color:  #CB7822; /* Cor mais escura no foco */
+    border-color:  #CB7822;
     box-shadow: 0 0 8px rgba(203, 120, 34, 0.4);
 }
 

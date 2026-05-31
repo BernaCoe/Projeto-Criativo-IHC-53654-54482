@@ -28,7 +28,7 @@ export function CaixaTonalidade({ onSelect, selectedKey }) {
 
 
 
-// 1. Recebe 'opcoes' como prop
+
 export function CaixaEstrutura({ onSelect, selectedStructure, opcoes }) {
   
   return (

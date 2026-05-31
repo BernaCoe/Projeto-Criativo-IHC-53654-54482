@@ -1,3 +1,4 @@
+/* Feito por 54482 */
 
 .modal-overlay {
   position: absolute;
@@ -43,14 +44,14 @@
 }
 
 .modal-heading {
-  font-family: var(--font-body);
+  font-family: Armata;
   font-weight: 700;
   font-size: 14px;
   color: #2A1A00;
 }
 
 .modal-message {
-  font-family: var(--font-body);
+  font-family: Armata;
   font-size: 13px;
   color: #2A1A00;
   line-height: 1.5;
@@ -63,7 +64,7 @@
 }
 
 .modal-btn {
-  font-family: var(--font-body);
+  font-family: Armata;
   font-weight: 700;
   font-size: 13px;
   padding: 7px 20px;

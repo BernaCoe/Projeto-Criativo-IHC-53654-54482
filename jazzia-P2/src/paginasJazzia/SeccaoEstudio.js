@@ -3,15 +3,22 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useClerk } from '@clerk/clerk-react';
+import { useClerk, useUser } from '@clerk/clerk-react';
 import AppButton from '../componentesReact/buttons/AppButton';
 import { FundoEstudio, BarraSuperiorDashboard, BarraInferiorDashboard, BotaoGrandeEstudio} from "../componentesReact/componentesGlobais";
 import '../componentesReact/SeccaoEstudio.css';
 
+
+
 function SeccaoEstudio() {
   const [tab, setTab] = useState('estudio');
   const navigate = useNavigate();
-  const { signOut } = useClerk();
+  const { user } = useUser();
+  const email = user?.primaryEmailAddress?.emailAddress;
+
+  console.log('Email usado:', email);
+
+
 
   return (
     <div className="pagina-conteudo">
@@ -23,7 +30,7 @@ function SeccaoEstudio() {
           {tab === 'estudio' && (
             <>
               <BotaoGrandeEstudio
-                texto="Gerar Sequência" 
+                texto="Gerar Sequência"
                 onClick={() => navigate('/gerarSequencia')}
               />
               <BotaoGrandeEstudio

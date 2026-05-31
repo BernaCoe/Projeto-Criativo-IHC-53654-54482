@@ -3,6 +3,10 @@
 
 /* Fundos */
 
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 .fundo-conta{
   width: 100%;
   min-height: 100vh;
@@ -26,6 +30,16 @@
   background-image: url("../Componentes-Figma/pag_entrada.png");
   background-size: cover;
   background-position: center;
+  animation: crescimento 3s ease-out forwards;
+}
+
+@keyframes crescimento {
+  from {
+    background-size: 99%; /* Começa no tamanho original */
+  }
+  to {
+    background-size: 103%; /* Cresce suavemente */
+  }
 }
 
 
@@ -49,7 +63,7 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* O fundo não se move com o scroll */
-  position: relative; /* Define o contexto para o resto da app */
+  position: relative;
   z-index: 0;
 }
 
@@ -66,7 +80,7 @@
 .texto-titulos{
 color: #000;
 
-font-family: Armata;
+font-family: 'Roboto', sans-serif;
 font-size: 24px;
 font-style: normal;
 font-weight: 400;
@@ -76,7 +90,7 @@ text-align: center;
 
 .texto-subtitulos{
     color: #0A0F1F;
-    font-family: Armata;
+    font-family: 'Roboto', sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -85,21 +99,21 @@ text-align: center;
 }
 
 
-.texto-normal{
-color: #000;
-
-font-family: Armata;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-align: left;
+.texto-normal {
+  color: #000;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
+  text-align: left;
+  margin: 0 0 5px 0;
+  display: flex;
 }
 
 
 .texto-detalhes{
     color: #0A0F1F;
-    font-family: Armata;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -141,8 +155,8 @@ text-align: left;
 
 
 .barra-inferior {
-  position: absolute; /* Cola-se ao container pai (.pagina-conteudo) */
-  bottom: 0;          /* Força a barra a ficar no fundo do container */
+  position: absolute; 
+  bottom: 0;          
   left: 0;
   width: 100%;
   height: 58px;
@@ -193,12 +207,12 @@ text-align: left;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s ease; /* Transição suave */
+  transition: background-color 0.3s ease; 
 }
 
 
 .botao-normal:hover {
-  background-color: #e5c14d; /* Cor um pouco mais escura ao passar o rato */
+  background-color: #e5c14d; 
 }
 
 
@@ -276,6 +290,9 @@ text-align: left;
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-items: flex-start; /* Força tudo a alinhar pela esquerda */
+  padding-left: 15px;      /* Define o alinhamento fixo de tudo */
+  margin-bottom: 20px;
 }
 
 .estrutura-botoes,
@@ -307,6 +324,7 @@ text-align: left;
   justify-content: center;
   align-items: center;
   color: rgb(0, 0, 0);
+
 }
 
 
@@ -356,12 +374,13 @@ text-align: left;
     width: 280px;
     height: 40px;
     padding: 0 15px;
+    font-family: 'Roboto', sans-serif;
 
     display: flex;
     border-radius: 25px; 
     border: 2px solid #D3B0FE;
     background-color: #FFF9E6; 
-    margin-top: -5px;
+    margin-top: -7px;
     font-family: inherit;
     font-size: 14px;
     color: #000000; 
@@ -412,7 +431,7 @@ text-align: left;
 }
 
 .entrada-login-hint {
-  font-family: var(--font-body);
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: white;
   opacity: 0.85;

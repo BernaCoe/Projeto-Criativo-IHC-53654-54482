@@ -1,10 +1,9 @@
-import { SignIn } from '@clerk/clerk-react';
-import { useNavigate } from 'react-router-dom';
-import { FundoLogin, BotaoNormal, BarraSuperiorDashboard } from "../componentesReact/componentesGlobais"; 
+// Feito por 54482
 
+import { SignIn } from '@clerk/clerk-react';
+import { FundoLogin, BarraSuperiorDashboard } from "../componentesReact/componentesGlobais"; 
 
 function Login() {
-  const navigate = useNavigate();
 
   return (
     <div className="pagina-conteudo">

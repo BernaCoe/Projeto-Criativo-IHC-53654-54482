@@ -19,7 +19,7 @@ export function CaixaConta({ nome, profissao, children }){
         padding: '20px',
         gap: '25px',
         position: 'relative',
-        margin: '20px auto' /* O "auto" aqui é o que centra o bloco na página */
+        margin: '20px auto' 
     };
 
     return(

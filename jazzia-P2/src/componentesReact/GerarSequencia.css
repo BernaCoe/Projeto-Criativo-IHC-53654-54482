@@ -1,22 +1,22 @@
 /* Feito por 53654 */
 
 .tonalidade-container {
-    margin: 20px auto; /* O "auto" aqui é o que centra o bloco na página */
+    margin: 20px auto; 
     width: 330px;
-    height: 240px; /* Ajustei a altura para o novo círculo maior */
+    height: 240px; 
     border-radius: 25px;
     background: #F9D65C;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra o círculo e o título horizontalmente */
+    align-items: center;
     padding: 15px 0;
 }
 
 
 .tonalidade-container p {
-    margin: 0 0 10px 0; /* Espaço entre o título e o círculo */
+    margin: 0 0 10px 0; 
     width: 100%;
-    padding-left: 20px; /* Alinha o texto à esquerda mantendo o bloco centralizado */
+    padding-left: 20px; 
     box-sizing: border-box;
 }
 
@@ -75,7 +75,7 @@
 
 /* Circulo de Quintas */
 
-/* Container de grupo para garantir que o hover e seleção funcionam */
+
 .circle-group {
   cursor: pointer;
 }
@@ -83,7 +83,7 @@
 .circle-group.disabled {
     cursor: not-allowed;
     background-color: #c7c7c7; 
-    pointer-events: none; /* Isto faz com que o SVG ignore qualquer tentativa de clique */
+    pointer-events: none; 
 }
 
 .circle-item.invalid {
@@ -103,12 +103,12 @@
   transition: all 0.2s ease;
 }
 
-/* Hover: Aplicado quando o rato passa no grupo */
+
 .circle-group:hover .circle-item {
   fill: #ffe9a0;
 }
 
-/* Selecionado: Especificidade maior sem precisar de !important */
+
 .circle-group .circle-item.selected {
   fill: #d4a715;
   stroke: #985711;
@@ -116,12 +116,14 @@
 }
 
 .circle-label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   fill: #6D3E0D;
-  pointer-events: none; /* Garante que o texto não "rouba" o clique */
+  pointer-events: none; 
   transition: all 0.2s ease;
 }
 
 .circle-group .circle-label.selected {
-  font-weight: 900;
+  font-weight: 500;
   fill: #000;
 }

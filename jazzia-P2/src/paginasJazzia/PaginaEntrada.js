@@ -1,8 +1,10 @@
+// Feito por 54482
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppButton from '../componentesReact/buttons/AppButton';
 import '../componentesReact/componentesGlobais.css';
 import { FundoEntrada } from "../componentesReact/componentesGlobais";
+
 
 function PaginaEntrada() {
   const navigate = useNavigate();

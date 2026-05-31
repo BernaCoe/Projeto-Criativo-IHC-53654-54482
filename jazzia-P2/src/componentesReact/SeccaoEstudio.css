@@ -1,3 +1,4 @@
+/* Feito por 54482 */
 
 .menu-screen {
   display: flex;
@@ -24,8 +25,8 @@
 }
 
 .menu-conta-text {
-  font-family: var(--font-body);
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   color: #fff;
   opacity: 0.85;
 }
