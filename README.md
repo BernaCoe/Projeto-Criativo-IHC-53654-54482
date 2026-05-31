@@ -21,8 +21,11 @@ Certifica-te de que tens instalado:
 2. Instala as dependências
 
 Este é um passo muito importante, sem o qual a nossa aplicação não funciona.
+```bash
 npm install
 
 3. Execução
+```bash
 cd jazzia
 npm start
+
