@@ -11,18 +11,19 @@ Esta é uma aplicação React desenvolvida para a geração progressões de acor
 
 ## Pré-requisitos
 Certifica-te de que tens instalado:
+* **VS Code**
 * **Node.js** (v18 ou superior)
 * **npm** (gestor de pacotes do Node)
 * **Browser** (Chrome, idealmente)
 
 ## Instalação e Execução
 
-1. Entra na pasta que contém a pasta 'jazzia'
+Abre no VS Code a pasta jazzia e executa os seguintes comandos.
 
-2. Instala as dependências e executa
-
+Se ainda não estiveres dentro da pasta 'jazzia', faz primeiro este comando. Se já estiveres dentro da página, avança para os seguintes.
 ```bash
 cd jazzia
-
+```
+```bash
 npm install
 npm start
