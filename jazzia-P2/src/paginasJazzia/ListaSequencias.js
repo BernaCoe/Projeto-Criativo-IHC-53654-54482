@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import { FundoEstudio, BarraSuperiorNormal, BotaoSequenciaGuardada } from "../componentesReact/componentesGlobais";
 import { ModalErroComDecisao } from "../componentesReact/Modais";
+import LoadingScreen from "../componentesReact/LoadingScreen";
 import '../componentesReact/ListaSequencias.css';
 import { openDB } from 'idb';
 
@@ -66,7 +67,7 @@ const loadSavedProgressions = async () => {
               }
             }
         } catch (err) {
-            console.warn("API indisponível, a usar dados locais.");
+            console.warn({err});
         }
     }
 
@@ -99,15 +100,20 @@ const loadSavedProgressions = async () => {
     }, [email]); 
 
 
+    if (loading) return <LoadingScreen />;
 
 
 
-  // Ordenação
-  const sorted = [...savedProgressions].sort((a, b) =>
-      sortOrder === 'asc' 
-        ? (a.name || "").localeCompare(b.name || "") 
-        : (b.name || "").localeCompare(a.name || "")
-    );
+// Ordenação Numérica pelo ID
+const sorted = [...savedProgressions].sort((a, b) => {
+    // Extrai o ID e garante que é um número (usa parseInt para ignorar strings)
+    const idA = parseInt(a._id || a.id || 0);
+    const idB = parseInt(b._id || b.id || 0);
+
+    return sortOrder === 'asc' 
+        ? idA - idB 
+        : idB - idA;
+});
 
 
 
@@ -117,14 +123,14 @@ const loadSavedProgressions = async () => {
       <BarraSuperiorNormal to="/estudio" />
       <div className="guardados-content" style={{ maxHeight: 'calc(100vh - 100px)' }}>
         <button className="guardados-sort" onClick={() => setSortOrder(o => o === 'asc' ? 'desc' : 'asc')}>
-          Ordem: {sortOrder === 'asc' ? 'A–Z' : 'Z–A'}
+          Ordem ID: {sortOrder === 'asc' ? 'Crescente' : 'Decrescente'}
         </button>
 
         <div className="guardados-list">
           {sorted.map((sequencia) => {
             const idBruto = sequencia._id || sequencia.id || "0000";
             const idCurto = String(idBruto).slice(-4).toUpperCase();
-            const textoBotao = `Progressão ${idCurto} - ${sequencia.chords ? sequencia.chords.substring(0, 15) + "..." : "Sem acordes"}`;
+            const textoBotao = `Sequência ${idCurto} - ${sequencia.chords ? sequencia.chords.substring(0, 15) + "..." : "Sem acordes"}`;
 
             return (
               <BotaoSequenciaGuardada

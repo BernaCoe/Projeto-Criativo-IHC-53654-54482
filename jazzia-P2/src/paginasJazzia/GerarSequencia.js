@@ -1,7 +1,6 @@
 // Feito por 53654
 
 import React, { useState, useEffect } from 'react';
-import { ClipLoader } from "react-spinners";
 import LoadingScreen from "../componentesReact/LoadingScreen";
 
 import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReact/componentesGlobais";
@@ -9,7 +8,7 @@ import "../componentesReact/componentesGlobais.css";
 import "../componentesReact/GerarSequencia.css";
 import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "../componentesReact/GerarSequencia";
 import { useNavigate } from 'react-router-dom';
-import {ModalErroComDecisao} from "../componentesReact/Modais.jsx"
+import {ModalErroInformativo} from "../componentesReact/Modais.jsx"
 
 
 
@@ -58,7 +57,7 @@ function GerarSequencia(){
             setStructures(sData.map(s => s.structure ?? s).slice(0, 10)); // TOP 10
             setModulations(mData.map(m => m.modulation ?? m));
             
-            console.log("LISTA DE TONALIDADES QUE A API ACEITA:", kData); // Para debug
+            console.log("Lista de tonalidades que a API aceita:", kData); // Para debug
                     
             // para debugging
             fetch(`${BASE_URL}/api/structures`)
@@ -155,31 +154,24 @@ const generateProgression = async () => {
 
               {/* Mensagem informativa */}
               {!isFormComplete && (
-                  <p style={{ color: '#000000', textAlign: 'center', marginTop: '10px', backgroundColor: 'gold', height:'50px', alignContent: 'center'}}>
+                  <p style={{ color: '#000000', textAlign: 'center', fontSize: '14px', marginTop: '10px', backgroundColor: 'gold', height:'50px', alignContent: 'center'}}>
                       Selecione as 3 propriedades para gerar.
                   </p>
               )}
 
       
               {showErro && (
-                  <ModalErroComDecisao 
+                  <ModalErroInformativo
                       // Se for erro 500, a mensagem é informativa
-                      mensagem={error === "combinação_indisponivel" 
-                          ? "Esta combinação ainda não está disponível na base de dados. Por favor, tente outra." 
-                          : "Falha na ligação. Tentar novamente?"}
+                      mensagem={"Esta combinação ainda não está disponível na base de dados. Por favor, tente outra."}
                       
                       onClose={() => setShowErro(false)}
-                      
-                      // Se for erro de rede, o confirmar tenta de novo. 
-                      // Se for combinação, o confirmar fecha o modal para o utilizador mudar a seleção
-                      onConfirm={error === "combinação_indisponivel" 
-                          ? () => setShowErro(false) 
-                          : () => {
+                    
+                      onConfirm={ () => {
                               setShowErro(false);
                               generateProgression();
                           }
                       }
-                      textoConfirmar={error === "combinação_indisponivel" ? "Entendido" : "Tentar de novo"}
                   />
               )}
 

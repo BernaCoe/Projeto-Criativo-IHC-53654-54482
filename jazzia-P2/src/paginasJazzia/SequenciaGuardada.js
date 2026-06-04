@@ -2,14 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ClipLoader } from "react-spinners";
 import {FundoEstudio, BarraSuperiorNormal, BotaoNormal} from "../componentesReact/componentesGlobais";
 import "../componentesReact/componentesGlobais.css";
 import {TabelaSequenciaGerada, CaixaSequenciaGerada} from '../componentesReact/SequenciaGerada';
-import {ModalSucesso, ModalErroInformativo, ModalAtencao} from "../componentesReact/Modais"
+import {ModalSucessoSemBotao, ModalErroInformativo, ModalAtencao} from "../componentesReact/Modais"
 import { useUser } from "@clerk/clerk-react";
 import { openDB } from 'idb';
-import LoadingScreen from "../componentesReact/LoadingScreen";
 
 
 
@@ -124,12 +122,12 @@ const loadSavedProgressions = async () => {
 
             {savedProgression && (
                 (() => {
-                    // 1. Extrai o ID e formata
+                    // Extrai o ID e formata
                     const idBruto = savedProgression._id || savedProgression.id || "0000";
                     const idCurto = String(idBruto).slice(-4).toUpperCase();
                     
-                    // Define o título apenas como "Progressão" + ID
-                    const tituloFinal = `Progressão ${idCurto}`;
+                    // Define o título apenas como "Sequência" + ID
+                    const tituloFinal = `Sequência ${idCurto}`;
 
                     return (
                         <CaixaSequenciaGerada nome={tituloFinal}>
@@ -177,7 +175,7 @@ const loadSavedProgressions = async () => {
 
             
             {showSucesso && (
-                <ModalSucesso 
+                <ModalSucessoSemBotao
                     mensagem="A sequência foi eliminada com sucesso." 
                     onClose={() => setShowSucesso(false)} 
                 />

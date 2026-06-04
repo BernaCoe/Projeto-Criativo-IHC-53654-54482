@@ -1,7 +1,7 @@
 // Feito por 53654
 
 
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import './Modais.css';
 
 
@@ -22,6 +22,22 @@ const overlayStyle = {
   zIndex: 1000 // Garante que fica por cima de tudo
 };
 
+const caixaBaseGuardar = {
+  width: '262px',
+  height: '176px',
+  boxShadow: '0 -2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 4px 0 rgba(0, 0, 0, 0.50)',
+  borderRadius: '25px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'left',
+  padding: '15px',
+  gap: '8px',
+  textAlign: 'left',
+  position: 'relative',
+};
+
+
+
 const caixaBaseStyle = {
   width: '262px',
   height: '176px',
@@ -29,11 +45,11 @@ const caixaBaseStyle = {
   borderRadius: '25px',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
+  alignItems: 'left',
   padding: '15px',
   gap: '8px',
-  textAlign: 'center',
-  position: 'relative'
+  textAlign: 'left',
+  position: 'relative',
 };
 
 const divisorStyle = {
@@ -47,14 +63,9 @@ const corpoModalStyle = {
   flex: 1,
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  textAlign: 'left'
 };
-
-
-
-
-
-
 
 
 
@@ -62,8 +73,8 @@ const corpoModalStyle = {
 
 // Estilo base para todos os botões de modal
 const baseButtonStyle = {
-  fontFamily: "'Armata', sans-serif", // Define a tua fonte
-  fontWeight: 'normal',              // Garante que não é negrito
+  fontFamily: 'Roboto, sans-serif', 
+  fontWeight: 'normal',
   padding: '10px 20px',
   borderRadius: '10px',
   border: 'none',
@@ -78,7 +89,7 @@ const baseButtonStyle = {
 
 export function BotaoAzulNormalPopUp({ texto, onClick }) {
   return (
-    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#007bff', color: '#fff' }}>
+    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#007bff', color: '#000000' }}>
       {texto}
     </button>
   );
@@ -114,8 +125,8 @@ export function BotaoAzulLargoPopUp({ texto, onClick }) {
 export function ModalSucesso({ mensagem, onClose }) {
   return (
     <div style={overlayStyle}>
-      <div style={{ ...caixaBaseStyle, backgroundColor: '#CFFF9E' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>Sucesso</p>
+      <div style={{ ...caixaBaseStyle, backgroundColor: '#CFFF9E',  textAlign: 'left' }}>
+        <p style={{ margin: 0, fontWeight: 'bold',  textAlign: 'left' }}>Sucesso</p>
         <hr style={divisorStyle} />
         <div style={corpoModalStyle}>
           <p style={{ margin: 0 }}>{mensagem}</p>
@@ -128,14 +139,38 @@ export function ModalSucesso({ mensagem, onClose }) {
   );
 }
 
+
+export function ModalSucessoSemBotao({ mensagem, onClose }) {
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }, [onClose]);
+
+    return (
+      <div style={overlayStyle}>
+        <div style={{ ...caixaBaseStyle, backgroundColor: '#CFFF9E', textAlign: 'left' }}>
+          <p style={{ margin: 0, fontWeight: 'bold', textAlign: 'left' }}>Sucesso</p>
+          <hr style={divisorStyle} />
+          <div style={corpoModalStyle}>
+            <p style={{ margin: 0 }}>{mensagem}</p>
+          </div>
+        </div>
+      </div>
+    );
+}
+
+
 export function ModalErroInformativo({ mensagem, onClose }) {
   return (
     <div style={overlayStyle}>
       <div style={{ ...caixaBaseStyle, backgroundColor: '#FFB2D3' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>Erro</p>
+        <p style={{ margin: 0, fontWeight: 'bold', textAlign: 'left', alignItems: 'left' }}>Erro</p>
         <hr style={divisorStyle} />
         <div style={corpoModalStyle}>
-          <p style={{ margin: 0 }}>{mensagem}</p>
+          <p style={{ margin: 0, textAlign: 'left' }}>{mensagem}</p>
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           <BotaoAzulNormalPopUp texto="OK" onClick={onClose} />
@@ -153,11 +188,11 @@ export function ModalErroComDecisao({ mensagem, onClose, onConfirm }) {
   return (
     <div style={overlayStyle}>
       <div style={{ ...caixaBaseStyle, backgroundColor: '#FFB2D3' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>Erro</p>
+        <p style={{ margin: 0, fontWeight: 'bold',  textAlign: 'left' }}>Erro</p>
         <hr style={divisorStyle} />
         
         <div style={corpoModalStyle}>
-          <p style={{ margin: 0 }}>{mensagem}</p>
+          <p style={{ margin: 0, textAlign: 'left' }}>{mensagem}</p>
         </div>
 
         {/* Container específico para dois botões */}
@@ -182,12 +217,12 @@ export function ModalErroComDecisao({ mensagem, onClose, onConfirm }) {
 export function ModalAtencao({ mensagem, onClose, onConfirm }) {
   return (
     <div style={overlayStyle}>
-      <div style={{ ...caixaBaseStyle, backgroundColor: '#F5F5F7' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>Atenção!</p>
+      <div style={{ ...caixaBaseStyle, backgroundColor: '#F5F5F7',  textAlign: 'left' }}>
+        <p style={{ margin: 0, fontWeight: 'bold',  textAlign: 'left' }}>Atenção!</p>
         <hr style={divisorStyle} />
         
         <div style={corpoModalStyle}>
-          <p style={{ margin: 0 }}>{mensagem}</p>
+          <p style={{ margin: 0, textAlign: 'left' }}>{mensagem}</p>
         </div>
 
         {/* Container específico para dois botões */}
@@ -226,11 +261,11 @@ export function ModalGuardar({ onClose, onConfirm }) {
 
   return (
     <div style={overlayStyle}>
-      <div style={{ ...caixaBaseStyle, backgroundColor: '#F5F5F7' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>Guardar Sequência</p>
+      <div style={{ ...caixaBaseGuardar, backgroundColor: '#F5F5F7' }}>
+        <p style={{ margin: 0, fontWeight: 'bold',  textAlign: 'left' }}>Guardar Sequência</p>
         <hr style={divisorStyle} />
         
-        <p style={{ margin: '5px 0', fontSize: '14px' }}>Defina um nome:</p>
+        <p style={{ margin: '5px 0', fontSize: '14px',  textAlign: 'left' }}>Defina um nome:</p>
         
         <input 
           type="text" 
@@ -241,7 +276,7 @@ export function ModalGuardar({ onClose, onConfirm }) {
             if (erro) setErro(""); // Limpa o aviso ao começar a escrever
           }}
           style={{
-            width: '80%',
+            width: '90%',
             padding: '8px',
             borderRadius: '5px',
             border: erro ? '1px solid red' : '1px solid #ccc', // Borda vermelha se houver erro

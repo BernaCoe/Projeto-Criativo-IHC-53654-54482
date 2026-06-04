@@ -102,8 +102,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   border: none;
   cursor: pointer;
-  color: white;
-  font-weight: bold;
+  color: rgb(0, 0, 0);
   transition: 0.2s ease;
 }
 
@@ -126,8 +125,7 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   border: none;
   cursor: pointer;
-  color: white;
-  font-weight: bold;
+  color: rgb(0, 0, 0);
   transition: 0.2s ease;
 }
 
@@ -171,7 +169,7 @@
     padding: 0 10px;
     outline: none;
     color: #000;
-    font-family: Armata;
+    font-family: Roboto;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -193,6 +191,7 @@
     border: none;
     cursor: pointer;
     margin-right: 10px;
+    color:#000;
 }
 
 .botao-azul-cancelar-popup:hover{
@@ -213,6 +212,7 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
     border: none;
     cursor: pointer;
+    color:#000;
 }
 
 

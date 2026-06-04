@@ -153,7 +153,7 @@ export function BotaoNormal({ texto, onClick, disabled }) {
 export function BotaoGrandeEstudio({ onClick, texto }) {
   return (
     <button className="botao-grande-estudio" onClick={onClick}>
-      {texto}
+      <span className="texto-normal">{texto}</span>
     </button>
   );
 }
@@ -163,7 +163,7 @@ export function BotaoGrandeEstudio({ onClick, texto }) {
 export function BotaoSequenciaGuardada({ onClick, texto }) {
   return (
     <button className="botao-sequencia-guardada" onClick={onClick}>
-      {texto || "Nome Indefinido - Consulte IndexedD"}
+      <span className="texto-normal">{texto || "Nome Indefinido - Consulte IndexedD"}</span>
     </button>
   );
 }

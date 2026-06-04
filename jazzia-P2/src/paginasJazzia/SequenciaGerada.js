@@ -17,6 +17,8 @@ const BASE_URL = "https://genjazz-api.fly.dev";
 
 function SequenciaGerada(){
 
+    const [ultimoId, setUltimoId] = useState(null);
+
     const location = useLocation();
         
     const { user } = useUser();
@@ -97,15 +99,19 @@ const saveProgression = async (nome) => {
         // Se o servidor deu OK, guarda no IndexedDB com o ID que ele devolveu
         const db = await initDB();
         await db.put('sequences', { ...novaSequencia, _id: data.id || data._id });
+        const idFinal = data.id || data._id;
+        setUltimoId(idFinal);
         
         console.log('Guardado com sucesso na API e IndexedDB! Id na API:', data.id);
         setShowSucesso(true);
 
     } catch (err) {
-        // Se falhar (Sem rede ou erro de servidor), guarda apenas no IndexedDB
+        // Se falhar (Sem rede ou erro de servidor), guarda apenas em IndexedDB
         console.warn("API indisponível, a guardar localmente...", err);
         const db = await initDB();
         await db.put('sequences', novaSequencia);
+        setUltimoId("Local (Offline)"); // Indica que é local
+        setShowSucesso(true);
         
         // Avisa o utilizador que guardou mas offline
         console.log("Guardado apenas localmente. Sincronize depois.");
@@ -159,7 +165,7 @@ const saveProgression = async (nome) => {
 
             {showSucesso && (
                 <ModalSucesso 
-                    mensagem="A sequência foi guardada com sucesso." 
+                    mensagem={`A sequência foi guardada com sucesso! ID ${ultimoId}`}
                     onClose={() => setShowSucesso(false)} 
                 />
             )}

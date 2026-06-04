@@ -16,10 +16,12 @@
 .tonalidade-container p {
     margin: 0 0 10px 0; 
     width: 100%;
+    padding-top: 7px;
     padding-left: 20px; 
     box-sizing: border-box;
 }
 
+.modulacao-container,
 .estrutura-container{
   width: 330px;
   height: 80px;
@@ -35,39 +37,15 @@
   align-items: center;
 }
 
+.modulacao-container p ,
 .estrutura-container p {
     margin: 0 0 10px 0; 
     width: 100%;
-    padding-top: 10px;
+    padding-top: 7px;
     padding-left: 20px; 
     box-sizing: border-box;
     align-items: center;
 }
-
-
-.modulacao-container{
-  width: 330px;
-  height: 80px;
-  border-radius: 25px;
-  background: #F9D65C;
-  flex-direction: column;  
-  justify-content: flex-start;
-  padding: 10px 0;
-  align-self: center;
-  display: flex;
-  text-align: left;
-  align-items: center;
-}
-
-.modulacao-container p {
-    margin: 0 0 10px 0; 
-    width: 100%;
-    padding-left: 20px; 
-    box-sizing: border-box;
-    align-items: center;
-}
-
-
 
 
 
