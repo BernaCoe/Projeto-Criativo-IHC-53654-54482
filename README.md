@@ -13,6 +13,7 @@ Esta é uma aplicação React desenvolvida para a geração progressões de acor
 Certifica-te de que tens instalado:
 * **Node.js** (v18 ou superior)
 * **npm** (gestor de pacotes do Node)
+* **Browser** (Chrome, idealmente)
 
 ## Instalação e Execução
 
@@ -21,7 +22,7 @@ Certifica-te de que tens instalado:
 2. Instala as dependências e executa
 
 ```bash
-npm install
-
 cd jazzia
+
+npm install
 npm start
