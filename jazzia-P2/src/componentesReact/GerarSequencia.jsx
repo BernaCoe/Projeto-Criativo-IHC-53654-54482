@@ -5,7 +5,6 @@ import "./componentesGlobais.css";
 // Uso:
 // import {CaixaTonalidade, CaixaEstrutura, CaixaModulacao} from "./GerarSequencia";
 
-import {BotaoOpcoesGerarSequencia} from "./componentesGlobais.jsx";
 import CirculoQuintas from "./CirculoQuintas.jsx";
 import "./componentesGlobais.css";
 
@@ -18,7 +17,7 @@ export function CaixaTonalidade({ onSelect, selectedKey }) {
   return (
     <div className="tonalidade-container">
       <p className="texto-normal">Tonalidade</p>
-      <CirculoQuintas 
+      <CirculoQuintas
         onSelect={onSelect} 
         selectedKey={selectedKey} 
       />

@@ -37,7 +37,9 @@ export function BotaoConta({ texto, onClick }) {
   return (
     <div className="container-botao-centro">
       <button className="botao-seccao-conta" onClick={onClick}>
+        <div className="texto-normal" style={{marginTop: '5px'}}>
         {texto}
+        </div>
       </button>
     </div>
   );

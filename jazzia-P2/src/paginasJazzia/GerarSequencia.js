@@ -35,7 +35,7 @@ function GerarSequencia(){
     const [structures, setStructures] = useState([]);
     const [modulations, setModulations] = useState([]);
 
-    const isFormComplete = selectedKey && selectedStructure && selectedModulation;
+    const isFormComplete = selectedKey;
 
 
       useEffect(() => {

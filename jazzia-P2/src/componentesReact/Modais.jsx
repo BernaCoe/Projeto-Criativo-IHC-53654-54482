@@ -89,7 +89,7 @@ const baseButtonStyle = {
 
 export function BotaoAzulNormalPopUp({ texto, onClick }) {
   return (
-    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#007bff', color: '#000000' }}>
+    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#f9d65c', color: '#000000' }}>
       {texto}
     </button>
   );
@@ -97,7 +97,7 @@ export function BotaoAzulNormalPopUp({ texto, onClick }) {
 
 export function BotaoNaoPopUp({ texto = "Não", onClick }) {
   return (
-    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#ff4d4d', color: '#fff' }}>
+    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#f9d65c', color: '#000000' }}>
       {texto}
     </button>
   );
@@ -105,7 +105,7 @@ export function BotaoNaoPopUp({ texto = "Não", onClick }) {
 
 export function BotaoSimPopUp({ texto = "Sim", onClick }) {
   return (
-    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#4CAF50', color: '#fff' }}>
+    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#f9d65c', color: '#000000' }}>
       {texto}
     </button>
   );
@@ -113,7 +113,7 @@ export function BotaoSimPopUp({ texto = "Sim", onClick }) {
 
 export function BotaoAzulLargoPopUp({ texto, onClick }) {
   return (
-    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#007bff', color: '#fff', width: '100px' }}>
+    <button onClick={onClick} style={{ ...baseButtonStyle, backgroundColor: '#f9d65c', color: '#000000', width: '100px' }}>
       {texto}
     </button>
   );

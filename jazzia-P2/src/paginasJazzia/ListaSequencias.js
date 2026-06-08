@@ -110,7 +110,7 @@ const sorted = [...savedProgressions].sort((a, b) => {
     const idA = parseInt(a._id || a.id || 0);
     const idB = parseInt(b._id || b.id || 0);
 
-    return sortOrder === 'asc' 
+    return sortOrder === 'desc' 
         ? idA - idB 
         : idB - idA;
 });
@@ -121,26 +121,28 @@ const sorted = [...savedProgressions].sort((a, b) => {
   <div className='pagina-conteudo'>
     <FundoEstudio>
       <BarraSuperiorNormal to="/estudio" />
-      <div className="guardados-content" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+      <div className="guardados-content" style={{ maxHeight: 'calc(100vh - 100px)'}}>
         <button className="guardados-sort" onClick={() => setSortOrder(o => o === 'asc' ? 'desc' : 'asc')}>
-          Ordem ID: {sortOrder === 'asc' ? 'Crescente' : 'Decrescente'}
+          Ordem ID: {sortOrder === 'desc' ?  'Decrescente' : 'Crescente'}
         </button>
 
         <div className="guardados-list">
           {sorted.map((sequencia) => {
             const idBruto = sequencia._id || sequencia.id || "0000";
             const idCurto = String(idBruto).slice(-4).toUpperCase();
-            const textoBotao = `Sequência ${idCurto} - ${sequencia.chords ? sequencia.chords.substring(0, 15) + "..." : "Sem acordes"}`;
-
+            const textoNome = `Sequência ${idCurto}`;
+            const textoCifras = `${sequencia.chords ? sequencia.chords.substring(0, 34) + "..." : "Sem acordes"}`;
             return (
               <BotaoSequenciaGuardada
                 key={sequencia._id || sequencia.id}
-                texto={textoBotao}
+                texto={textoNome}
+                textoAcordes={textoCifras}
                 onClick={() => navigate("/sequenciaGuardada", { state: { progression: sequencia } })}
               />
             );
           })}
         </div>
+        <div style={{marginBottom: '40px'}}></div>
       </div>
 
       {showErrorModal && (

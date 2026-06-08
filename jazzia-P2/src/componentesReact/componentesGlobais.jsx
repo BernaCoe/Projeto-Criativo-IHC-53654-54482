@@ -50,7 +50,7 @@ export function FundoConta({ children }) {
 
 
 
-export function BarraSuperiorNormal({ texto = "Voltar", to }) {
+export function BarraSuperiorNormal({ texto = "", to }) {
   const navigate = useNavigate();
   
   const handleClick = () => {
@@ -75,7 +75,7 @@ export function BarraSuperiorNormal({ texto = "Voltar", to }) {
 export function BarraSuperiorDashboard({ texto = "Jazzia - Gera, Toca e Jazz!"}) {
   return (
     <div className="barra-superior">
-      <div className="texto-subtitulo" style={{textAlign: 'center', width: '85%'}}>
+      <div className="texto-subtitulos" style={{textAlign: 'center', width: '89%', fontSize: '16px'}}>
       {texto}
       </div>
     </div>
@@ -160,10 +160,26 @@ export function BotaoGrandeEstudio({ onClick, texto }) {
 
 
 
-export function BotaoSequenciaGuardada({ onClick, texto }) {
+export function BotaoSequenciaGuardada({ onClick, texto, textoAcordes }) {
   return (
-    <button className="botao-sequencia-guardada" onClick={onClick}>
-      <span className="texto-normal">{texto || "Nome Indefinido - Consulte IndexedD"}</span>
+    <button 
+      className="botao-sequencia-guardada" 
+      onClick={onClick}
+      style={{
+        display: 'flex',
+        flexDirection: 'column', // Força os elementos a empilharem-se verticalmente
+        alignItems: 'flex-start', // Alinha tudo à esquerda
+        width: '100%',            // Garante que o botão usa a largura disponível
+        padding: '10px 20px',      // Ajusta o padding para o conteúdo não colar nas bordas
+        marginBottom: '-10px'
+      }}
+    >
+      <div style={{marginLeft: '20px', whiteSpace: 'nowrap', marginTop: '18px'}}>
+        <span className="texto-normal">{texto || "Nome Indefinido - Consulte IndexedD"}</span>
+      </div>
+      <div style={{marginLeft: '20px', whiteSpace: 'nowrap'}}>
+        <span className="texto-detalhes">{textoAcordes || "Sem Cifras"}</span>
+      </div>
     </button>
   );
 }
